@@ -1,37 +1,52 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using TournamentOrganizerClient.Models;
-using System;
 
 namespace TournamentOrganizerClient.Controllers
 {
-  public class HomeController : Controller
+  public class ShopsController : Controller
   {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
-    {
-      _logger = logger;
-    }
-
     public IActionResult Index()
     {
-      return RedirectToAction("Index", "Home");
+      var allMatches = Match.GetMatches();
+      return View(allMatches);
     }
 
-    public IActionResult Privacy()
+    [HttpPost]
+    public IActionResult Index(Match match)
     {
-      return View();
+      Match.Post(match);
+      return RedirectToAction("Index");
     }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
+    public IActionResult Details(int id)
     {
-      return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+      var match = Match.GetDetails(id);
+      return View(match);
+    }
+
+    public IActionResult Edit(int id)
+    {
+      var match = Match.GetDetails(id);
+      return View(match);
+    }
+
+    [HttpPost]
+    public IActionResult Details(int id, Match match)
+    {
+      match.MatchId = id;
+      Match.Put(match);
+      return RedirectToAction("Details", id);
+    }
+
+    public IActionResult Delete(int id)
+    {
+      Match.Delete(id);
+      return RedirectToAction("Index");
     }
   }
 }
