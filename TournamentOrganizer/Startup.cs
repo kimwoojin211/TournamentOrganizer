@@ -11,7 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using TournamentOrganizer.Models;
 
-namespace AnimalShelter
+namespace TournamentOrganizer
 {
     public class Startup
     {
@@ -71,7 +71,7 @@ namespace AnimalShelter
 
             app.UseRouting();
 
-            // gloval cors policy
+            // global cors policy
             app.UseCors(x => x
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
