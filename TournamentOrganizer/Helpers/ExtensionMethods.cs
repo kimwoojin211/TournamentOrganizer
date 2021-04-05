@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using AnimalShelter.Entities;
+using TournamentOrganizer.Entities;
 
-namespace AnimalShelter.Helpers
+namespace TournamentOrganizer.Helpers
 {
   public static class ExtensionMethods
   {
