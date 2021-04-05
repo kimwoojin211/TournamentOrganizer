@@ -8,44 +8,44 @@ using TournamentOrganizerClient.Models;
 
 namespace TournamentOrganizerClient.Controllers
 {
-  public class MatchesController : Controller
+  public class PlayersController : Controller
   {
     public IActionResult Index()
     {
-      var allMatches = Match.GetMatches();
-      return View(allMatches);
+      var allPlayers = Player.GetPlayers();
+      return View(allPlayers);
     }
 
     [HttpPost]
-    public IActionResult Index(Match match)
+    public IActionResult Index(Player player)
     {
-      Match.Post(match);
+      Player.Post(player);
       return RedirectToAction("Index");
     }
 
     public IActionResult Details(int id)
     {
-      var match = Match.GetDetails(id);
-      return View(match);
+      var player = Player.GetDetails(id);
+      return View(player);
     }
 
     public IActionResult Edit(int id)
     {
-      var match = Match.GetDetails(id);
-      return View(match);
+      var player = Player.GetDetails(id);
+      return View(player);
     }
 
     [HttpPost]
-    public IActionResult Details(int id, Match match)
+    public IActionResult Details(int id, Player player)
     {
-      match.MatchId = id;
-      Match.Put(match);
+      player.PlayerId = id;
+      Player.Put(player);
       return RedirectToAction("Details", id);
     }
 
     public IActionResult Delete(int id)
     {
-      Match.Delete(id);
+      Player.Delete(id);
       return RedirectToAction("Index");
     }
   }
