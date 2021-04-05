@@ -106,10 +106,10 @@ namespace TournamentOrganizer.Controllers
       {
         return NotFound();
       }
-        _db.Tournaments.Remove(tournament);
-        await _db.SaveChangesAsync();
-        return NoContent();
-    }    
+      _db.Tournaments.Remove(tournament);
+      await _db.SaveChangesAsync();
+      return NoContent();
+    }
     private bool TournamentExists(int id)
     {
       return _db.Tournaments.Any(e => e.TournamentId == id);
