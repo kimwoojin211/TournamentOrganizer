@@ -10,8 +10,10 @@ namespace TournamentOrganizer.Models
     }
 
     public DbSet<Tournament> Tournaments { get; set; }
-    // protected override void OnModelCreating(ModelBuilder builder)
-    // {
-    // }
+    public DbSet<Player> Players { get; set; }
+    public DbSet<Match> Matches { get; set; }
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+    }
   }
 }

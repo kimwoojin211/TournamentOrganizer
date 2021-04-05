@@ -7,7 +7,7 @@ namespace TournamentOrganizer.Models
   {
     public Tournament()
     {
-      this.RegisteredPlayers = new HashSet<PlayerTournament>();
+      this.RegisteredPlayers = new HashSet<Player>();
       // this.Moderators = new HashSet<UserTournament>();
     }
     public int TournamentId { get; set; }
@@ -17,7 +17,7 @@ namespace TournamentOrganizer.Models
     public DateTime Time { get; set; }
 
     public string Category { get; set; }
-    public virtual ICollection<PlayerTournament> RegisteredPlayers { get; }
+    public virtual ICollection<Player> RegisteredPlayers { get; set; }
     // public virtual ICollection<UserTournament> Moderators { get; }
     // public virtual Bracket Bracket { get; set; }
     // public string Standings { get; set; }
