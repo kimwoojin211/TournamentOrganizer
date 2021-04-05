@@ -1,4 +1,4 @@
-namespace AnimalShelter.Entities
+namespace TournamentOrganizer.Entities
 {
   public class User
   {
@@ -6,8 +6,8 @@ namespace AnimalShelter.Entities
     public string Name { get; set; }
     public string UserName { get; set; }
     public string Email { get; set; }
-    public string Password { get; set; }
     public string Region { get; set; }
+    public string Password { get; set; }
     public string Token { get; set; }
   }
 }
