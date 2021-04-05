@@ -3,12 +3,12 @@ using RestSharp;
 
 namespace TournamentOrganizerClient.Models
 {
-  class ApiMatch
+  class ApiPlayer
   {
     public static async Task<string> GetAll()
     {
       RestClient client = new RestClient("http://localhost:5000/");
-      RestRequest request = new RestRequest($"matches", Method.GET);
+      RestRequest request = new RestRequest($"players", Method.GET);
       var response = await client.ExecuteTaskAsync(request);
       return response.Content;
     }
@@ -16,33 +16,33 @@ namespace TournamentOrganizerClient.Models
     public static async Task<string> Get(int id)
     {
       RestClient client = new RestClient("http://localhost:5000/");
-      RestRequest request = new RestRequest($"matches/{id}", Method.GET);
+      RestRequest request = new RestRequest($"players/{id}", Method.GET);
       var response = await client.ExecuteTaskAsync(request);
       return response.Content;
     }
 
-    public static async Task Post(string newShop)
+    public static async Task Post(string newPlayer)
     {
       RestClient client = new RestClient("http://localhost:5000/");
-      RestRequest request = new RestRequest($"matches", Method.POST);
+      RestRequest request = new RestRequest($"players", Method.POST);
       request.AddHeader("Content-Type", "application/json");
-      request.AddJsonBody(newShop);
+      request.AddJsonBody(newPlayer);
       var response = await client.ExecuteTaskAsync(request);
     }
 
-    public static async Task Put(int id, string newMatch)
+    public static async Task Put(int id, string newPlayer)
     {
       RestClient client = new RestClient("http://localhost:5000/");
-      RestRequest request = new RestRequest($"matches/{id}", Method.PUT);
+      RestRequest request = new RestRequest($"players/{id}", Method.PUT);
       request.AddHeader("Content-Type", "application/json");
-      request.AddJsonBody(newMatch);
+      request.AddJsonBody(newPlayer);
       var response = await client.ExecuteTaskAsync(request);
     }
 
     public static async Task Delete(int id)
     {
       RestClient client = new RestClient("http://localhost:5000/");
-      RestRequest request = new RestRequest($"matches/{id}", Method.DELETE);
+      RestRequest request = new RestRequest($"players/{id}", Method.DELETE);
       request.AddHeader("Content-Type", "application/json");
       
       var response = await client.ExecuteTaskAsync(request);
