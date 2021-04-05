@@ -1,61 +1,51 @@
-using System.Collections.Generic;
-using System;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System.Threading.Tasks;
+using RestSharp;
 
-namespace TournamentOrganizer
+namespace TournamentOrganizerClient.Models
 {
-  public class Match
+  class ApiMatch
   {
-     public int MatchId { get; set; }
-
-        public string Players { get; set; }
-     
-        public string Format { get; set; }
-     
-        public string Category { get; set; }
-        public int BracketId { get; set; }
-        public int TournamentId { get; set; }
-        public string Sets {get; set;}
-        
-
-    public static List<Match> GetMatches()
+    public static async Task<string> GetAll()
     {
-      var apiCallTask = ApiHelper.GetAll();
-      var result = apiCallTask.Result;
-
-      JArray jsonResponse = JsonConvert.DeserializeObject<JArray>(result);
-      List<Match> matchList = JsonConvert.DeserializeObject<List<Match>>(jsonResponse.ToString());
-
-      return matchList;
+      RestClient client = new RestClient("http://localhost:5000/");
+      RestRequest request = new RestRequest($"matches", Method.GET);
+      var response = await client.ExecuteTaskAsync(request);
+      return response.Content;
     }
 
-    public static Match GetDetails(int id)
+    public static async Task<string> Get(int id)
     {
-      var apiCallTask = ApiHelper.Get(id);
-      var result = apiCallTask.Result;
-
-      JObject jsonResponse = JsonConvert.DeserializeObject<JObject>(result);
-      match match = JsonConvert.DeserializeObject<Match>(jsonResponse.ToString());
-
-      return match;
+      RestClient client = new RestClient("http://localhost:5000/");
+      RestRequest request = new RestRequest($"matches/{id}", Method.GET);
+      var response = await client.ExecuteTaskAsync(request);
+      return response.Content;
     }
 
-    public static void Post(Match match)
+    public static async Task Post(string newShop)
     {
-      string jsonMatch = JsonConvert.SerializeObject(match);
-      var apiCallTask = ApiHelper.Post(jsonMatch);
+      RestClient client = new RestClient("http://localhost:5000/");
+      RestRequest request = new RestRequest($"matches", Method.POST);
+      request.AddHeader("Content-Type", "application/json");
+      request.AddJsonBody(newShop);
+      var response = await client.ExecuteTaskAsync(request);
     }
 
-    public static void Put(Match match)
+    public static async Task Put(int id, string newMatch)
     {
-      string jsonMatch = JsonConvert.SerializeObject(match);
-      var apiCallTask = ApiHelper.Put(match.MatchId, jsonMatch);
+      RestClient client = new RestClient("http://localhost:5000/");
+      RestRequest request = new RestRequest($"matches/{id}", Method.PUT);
+      request.AddHeader("Content-Type", "application/json");
+      request.AddJsonBody(newMatch);
+      var response = await client.ExecuteTaskAsync(request);
     }
 
-    public static void Delete(int id)
+    public static async Task Delete(int id)
     {
-      var apiCallTask = ApiHelper.Delete(id);
+      RestClient client = new RestClient("http://localhost:5000/");
+      RestRequest request = new RestRequest($"matches/{id}", Method.DELETE);
+      request.AddHeader("Content-Type", "application/json");
+      
+      var response = await client.ExecuteTaskAsync(request);
     }
   }
 }
