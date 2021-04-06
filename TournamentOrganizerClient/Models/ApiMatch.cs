@@ -1,3 +1,4 @@
+
 using System.Threading.Tasks;
 using RestSharp;
 
@@ -49,3 +50,4 @@ namespace TournamentOrganizerClient.Models
     }
   }
 }
+

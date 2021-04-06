@@ -12,7 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 
-namespace TournamentOrganizer
+namespace TournamentOrganizerClient
 {
     public class Startup
     {
