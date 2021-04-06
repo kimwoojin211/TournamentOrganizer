@@ -7,17 +7,17 @@ namespace TournamentOrganizerClient.Models
 {
   public class Match
   {
-     public int MatchId { get; set; }
+    public int MatchId { get; set; }
 
-        public string Players { get; set; }
-     
-        public string Format { get; set; }
-     
-        public string Category { get; set; }
-        public int BracketId { get; set; }
-        public int TournamentId { get; set; }
-        public string Sets {get; set;}
-        
+    public ICollection<ICollection<Player>> Teams { get; set; }
+
+    public string Format { get; set; }
+
+    public string Category { get; set; }
+    public int BracketId { get; set; }
+    public int TournamentId { get; set; }
+    public string Score { get; set; }
+
 
     public static List<Match> GetMatches()
     {
