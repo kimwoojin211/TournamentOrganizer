@@ -8,17 +8,25 @@ using TournamentOrganizer.Services;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.Hosting;
+
 using Microsoft.EntityFrameworkCore;
+
+using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+
 using TournamentOrganizer.Models;
 
 namespace TournamentOrganizer
 {
-    public class Startup
+  public class Startup
+  {
+    public Startup(IConfiguration configuration)
     {
-        public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
+    }
 
         public IConfiguration Configuration { get; }
 
@@ -66,6 +74,11 @@ namespace TournamentOrganizer
             {
                 app.UseDeveloperExceptionPage();
             }
+          else
+          {
+          app.UseExceptionHandler("/Home/Error");
+          app.UseHsts();
+          }
 
             // app.UseHttpsRedirection();
 
@@ -87,3 +100,7 @@ namespace TournamentOrganizer
         }
     }
 }
+    
+
+   
+
