@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace TournamentOrganizer.Models
 {
@@ -14,6 +15,8 @@ namespace TournamentOrganizer.Models
     public DbSet<Match> Matches { get; set; }
     protected override void OnModelCreating(ModelBuilder builder)
     {
+      // builder.Entity<HashSet<Player>>().HasNoKey();
+      // builder.Entity<HashSet<Player>>().HasOne(u => u.Team).WithMany(u => u.TeamMembers);
     }
   }
 }
