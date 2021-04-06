@@ -5,9 +5,11 @@ namespace TournamentOrganizer.Models
   public class TournamentOrganizerContext : DbContext
   {
     public TournamentOrganizerContext(DbContextOptions<TournamentOrganizerContext> options)
-        : base(options)
-    {
-    }
+
+      :base(options)
+      {
+      }
+    
 
     public DbSet<Tournament> Tournaments { get; set; }
     public DbSet<Player> Players { get; set; }
@@ -15,5 +17,6 @@ namespace TournamentOrganizer.Models
     protected override void OnModelCreating(ModelBuilder builder)
     {
     }
+
   }
 }
