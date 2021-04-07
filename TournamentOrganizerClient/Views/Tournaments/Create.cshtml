@@ -1,0 +1,22 @@
+@{
+ Layout = "_Tournament";
+}
+
+@model TournamentOrganizerClient.Models.Tournament
+
+@using (Html.BeginForm())
+{
+  @Html.DisplayNameFor(model => model.Name)
+  @Html.TextBoxFor(model => model.Name)
+  @Html.DisplayNameFor(model => model.OrganizedBy)
+  @Html.TextBoxFor(model => model.OrganizedBy)
+  @Html.DisplayNameFor(model => model.Location)
+  @Html.TextBoxFor(model => model.Location)
+  @Html.DisplayNameFor(model => model.Time)
+  @Html.TextBoxFor(model => model.Time, new {@type="time"})
+  @Html.DisplayNameFor(model => model.Category)
+  @Html.TextBoxFor(model => model.Category)
+
+
+  <input type="submit" value="Add" class="btn btn-danger" /> 
+} 

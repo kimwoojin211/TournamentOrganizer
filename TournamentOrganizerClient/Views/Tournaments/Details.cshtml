@@ -1,0 +1,18 @@
+@{
+  Layout = "_Tournament";
+}
+
+@model TournamentOrganizerClient.Models.Tournament
+
+<h3>Tournament Name:</h3>
+<h4>@Html.DisplayFor(model => model.Name)</h4>
+
+<ul>
+  <li> @Html.DisplayNameFor(model => model.OrganizedBy): @Html.DisplayFor(model => model.OrganizedBy)</li>
+  <li>@Html.DisplayNameFor(model => model.Location): @Html.DisplayFor(model => model.Location)</li>
+  <li>@Html.DisplayNameFor(model => model.Time): @Html.DisplayFor(model => model.Time, new {@type="time"} )</li>
+  <li>@Html.DisplayNameFor(model => model.Category): @Html.DisplayFor(model => model.Category)</li>
+</ul>
+
+<p>@Html.ActionLink("Edit Tournament", "Edit", new { id = Model.TournamentId })</p>
+<p>@Html.ActionLink("Delete Tournament", "Delete", new { id = Model.TournamentId })</p>

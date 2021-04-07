@@ -10,6 +10,7 @@ body, html{
 body{
 	font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 	font-size: 60%;
+	background-color: aqua;
 }
 
 .home{

@@ -14,50 +14,42 @@ namespace TournamentOrganizerClient.Models
     public string Token { get; set; }
     public static List<Account> GetAccounts()
     {
-      System.Console.WriteLine("11");
       var apiCalltask = ApiAccount.GetAll();
-      System.Console.WriteLine("12");
       var result = apiCalltask.Result;
+      List<Account> accountList = new List<Account>();
 
-      System.Console.WriteLine($"13 {apiCalltask.Result}");
-      System.Console.WriteLine("check");
       if(result!=null && result.Length != 0)
       {
         JArray jsonResponse = JsonConvert.DeserializeObject<JArray>(result);
-
-        System.Console.WriteLine($"14 {jsonResponse.ToString()}");
-        List<Account> accountList = JsonConvert.DeserializeObject<List<Account>>(jsonResponse.ToString());
-
-        System.Console.WriteLine("15");
-        return accountList;
+        accountList = JsonConvert.DeserializeObject<List<Account>>(jsonResponse.ToString());
       }
-      else
-      {
-        return new List<Account>();
-      }
+      return accountList;
     }
 
-    // public static Account GetDetails(int id)
-    // {
-    //   var apiCallTask = ApiAccount.GetAccount(id);
-    //   var result = apiCallTask.Result;
+    public static Account GetDetails(int id)
+    {
+      var apiCallTask = ApiAccount.Get(id);
+      System.Console.WriteLine("------------" + apiCallTask.ToString());
+      var result = apiCallTask.Result;
+      Account account = new Account();
+      if (result != null)
+      {
+        JObject jsonResponse = JsonConvert.DeserializeObject<JObject>(result);
+      }
 
-    //   JObject jsonResponse = JsonConvert.DeserializeObject<JObject>(result);
-    //   Account account = JsonConvert.DeserializeObject<Account>(jsonResponse.ToString());
+      return account;
+    }
 
-    //   return account;
-    // }
-
-    // public static void Post(Account account)
+    // public static void Register(Account account)
     // {
     //   string jsonAccount = JsonConvert.SerializeObject(account);
-    //   var apiCallTask = ApiAccount.PostAccount(jsonAccount);
+    //   var apiCallTask = ApiAccount.Register(jsonAccount);
     // }
 
     // public static void Put(Account account)
     // {
     //   string jsonAccount = JsonConvert.SerializeObject(account);
-    //   var appiCallTask = ApiAccount.PutAccount(account.AccountId, jsonAccount);
+    //   var appiCallTask = ApiAccount.Put(account.AccountId, jsonAccount);
     // }
 
     // public static void Delete(int id)
