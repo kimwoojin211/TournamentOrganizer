@@ -1,0 +1,25 @@
+@{
+  Layout = "_Tournament";
+}
+
+@model TournamentOrganizerClient.Models.Tournament
+
+<h2>Edit</h2>
+<hr>
+<h3>Editing: @Html.DisplayFor(model => model.Name)</h3>
+
+
+@using (Html.BeginForm())
+{
+  @Html.HiddenFor(model => model.TournamentId)
+  <p>@Html.DisplayNameFor(model => model.Name)</p>
+  <p>@Html.EditorFor(model => model.Name)</p>
+  <p>@Html.DisplayNameFor(model => model.OrganizedBy)</p>
+  <p>@Html.@Html.EditorFor(model => model.OrganizedBy)</p>
+  <p>@Html.DisplayNameFor(model => model.Location)</p>
+  <p>@Html.@Html.EditorFor(model => model.Location)</p>
+  <p placeholder="e.g. 12:30am" type="datetime">@Html.DisplayNameFor(model => model.Time)</p>
+  <p>@Html.@Html.EditorFor(model => model.Time)</p>
+  <p>@Html.DisplayNameFor(model => model.Category)</p>
+  <p>@Html.@Html.EditorFor(model => model.Category)</p>
+}
