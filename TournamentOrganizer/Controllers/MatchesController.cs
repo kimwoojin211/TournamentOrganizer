@@ -149,9 +149,7 @@ namespace TournamentOrganizer.Controllers
     {
       if(match != null)
       {
-        System.Console.WriteLine("1");
         _db.MatchUsers.Add(new MatchUser() {MatchId = matchId, UserId = userId});
-        System.Console.WriteLine("2");
         await _db.SaveChangesAsync();
       }
       return NoContent();

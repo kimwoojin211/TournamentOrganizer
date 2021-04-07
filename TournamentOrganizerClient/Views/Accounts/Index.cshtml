@@ -1,0 +1,16 @@
+<h1>All Accounts:</h1>
+
+<ol>
+@using TournamentOrganizerClient.Models;
+@foreach (Account account in Model)
+{
+    <ul>
+        <li>UserId: @account.UserId</li>
+        <li>Username: @account.Username</li>
+        <li>Name: @account.Name</li>
+        <li>Email: @account.Email</li>
+        <li>Region: @account.Region</li>
+    </ul>
+    <br>
+}
+</ol>

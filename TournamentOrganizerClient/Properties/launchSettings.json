@@ -16,7 +16,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Tournament_Organizer": {
+    "Tournament_Organizer_Client": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": true,

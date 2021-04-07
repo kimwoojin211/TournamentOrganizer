@@ -112,15 +112,15 @@ namespace TournamentOrganizer.Controllers
       return NoContent();
     }
 
-    [HttpDelete("{id}/DeleteUser/{joinId}")]
-    public async Task<IActionResult> DeleteUser(int id, int joinId)
-    {
-      var thisTournament =  await _db.Tournaments.FindAsync(id);
-      var joinEntry = thisTournament.Include(entry => entry.TournamentUsers).FirstOrDefaultAsync(entry => entry.TournamentUserId == joinId);
-      _db.Remove(joinEntry);
-      await _db.SaveChangesAsync();
-      return NoContent();
-    }
+    // [HttpDelete("{id}/DeleteUser/{joinId}")]
+    // public async Task<IActionResult> DeleteUser(int id, int joinId)
+    // {
+    //   // var thisTournament =  await _db.Tournaments.FindAsync(id);
+    //   // var joinEntry = _db.Tournaments.Include(entry => entry.TournamentUsers).FirstOrDefaultAsync(entry => entry.TournamentUserId == joinId);
+    //   // _db.Remove(joinEntry);
+    //   // await _db.SaveChangesAsync();
+    //   // return NoContent();
+    // }
 
     [HttpPost("{id}/AddUser/{userId}")]
     public async Task<IActionResult> AddUser(int id, int userId)
