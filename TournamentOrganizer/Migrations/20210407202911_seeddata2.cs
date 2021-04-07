@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace TournamentOrganizer.Migrations.User
+namespace TournamentOrganizer.Migrations
 {
-    public partial class fix6 : Migration
+    public partial class seeddata2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

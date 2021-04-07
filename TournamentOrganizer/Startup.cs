@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using TournamentOrganizer.Models;
 using TournamentOrganizer.Entities;
+using Newtonsoft.Json;
 
 namespace TournamentOrganizer
 {
@@ -31,9 +32,11 @@ namespace TournamentOrganizer
 				services.AddCors();
 				services.AddDbContext<TournamentOrganizerContext>(opt =>
 						opt.UseMySql(Configuration["ConnectionStrings:DefaultConnection"], ServerVersion.AutoDetect(Configuration["ConnectionStrings:DefaultConnection"])));
-				services.AddDbContext<UserContext>(opt =>
-						opt.UseMySql(Configuration["ConnectionStrings:DefaultConnection"], ServerVersion.AutoDetect(Configuration["ConnectionStrings:DefaultConnection"])));
+				// services.AddDbContext<UserContext>(opt =>
+				// 		opt.UseMySql(Configuration["ConnectionStrings:DefaultConnection"], ServerVersion.AutoDetect(Configuration["ConnectionStrings:DefaultConnection"])));
 				services.AddControllers();
+
+				// services.AddJsonOptions(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
 				// configure strongly typed settings objects
 				var appSettingsSection = Configuration.GetSection("AppSettings");
@@ -62,6 +65,8 @@ namespace TournamentOrganizer
 
 				// configure DI for application services
 				services.AddScoped<IUserService, UserService>();
+
+
 			}
 
 			// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

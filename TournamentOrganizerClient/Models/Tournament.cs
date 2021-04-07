@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 
-namespace TournamentOrganizer.Models
+namespace TournamentOrganizerClient.Models
 {
   public class Tournament
   {
@@ -49,7 +49,7 @@ namespace TournamentOrganizer.Models
       return tournament;
     }
 
-     public static void Post(Tournament tournament)
+    public static void Post(Tournament tournament)
     {
       string jsonTournament = JsonConvert.SerializeObject(place);
       var apiCallTask = ApiHelper.PostPlace(jsonTournament);

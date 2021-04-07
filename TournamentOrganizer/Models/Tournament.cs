@@ -20,6 +20,7 @@ namespace TournamentOrganizer.Models
 
     public string Category { get; set; }
     public ICollection<Match> Matches { get; set; }
+    // [System.Text.Json.Serialization.JsonIgnore]
     public virtual ICollection<TournamentUser> TournamentUsers { get; set; }
     // public virtual ICollection<User> Moderators { get; set; }
     // public virtual Bracket Bracket { get; set; }

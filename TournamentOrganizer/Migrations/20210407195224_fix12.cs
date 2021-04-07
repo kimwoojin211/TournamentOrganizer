@@ -2,7 +2,7 @@
 
 namespace TournamentOrganizer.Migrations
 {
-    public partial class fix8 : Migration
+    public partial class fix12 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -14,17 +14,15 @@ namespace TournamentOrganizer.Controllers
   public class MatchesController : ControllerBase
   {
     private readonly TournamentOrganizerContext _db;
-    private readonly UserContext _users;
-    public MatchesController(TournamentOrganizerContext db, UserContext users)
+    public MatchesController(TournamentOrganizerContext db)
     {
       _db = db;
-      _users = users;
     }
     // GET api/matches
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Match>>> Get()
     {
-      var query = _db.Matches.AsQueryable();
+      var query = _db.Matches.Include(match => match.MatchUsers).ThenInclude(join => join.User).AsQueryable();
       return await query.ToListAsync();
       // if (name != null)
       // {

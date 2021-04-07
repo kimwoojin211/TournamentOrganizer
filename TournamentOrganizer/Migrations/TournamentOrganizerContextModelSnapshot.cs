@@ -43,7 +43,27 @@ namespace TournamentOrganizer.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            Email = "joebud@budd.com",
+                            Name = "Joe Buden",
+                            Password = "test",
+                            Region = "Los Angeles, CA, USA",
+                            Username = "test"
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            Email = "joebuddy@budd.com",
+                            Name = "Joe Buddy",
+                            Password = "test2",
+                            Region = "Los Angeles, CA, USA",
+                            Username = "test2"
+                        });
                 });
 
             modelBuilder.Entity("TournamentOrganizer.Models.Match", b =>
@@ -69,6 +89,16 @@ namespace TournamentOrganizer.Migrations
                     b.HasIndex("TournamentId");
 
                     b.ToTable("Matches");
+
+                    b.HasData(
+                        new
+                        {
+                            MatchId = 1,
+                            Category = "Game",
+                            Format = "First to 5",
+                            Score = "1-1",
+                            TournamentId = 1
+                        });
                 });
 
             modelBuilder.Entity("TournamentOrganizer.Models.MatchUser", b =>
@@ -116,6 +146,17 @@ namespace TournamentOrganizer.Migrations
                     b.HasKey("TournamentId");
 
                     b.ToTable("Tournaments");
+
+                    b.HasData(
+                        new
+                        {
+                            TournamentId = 1,
+                            Category = "Game",
+                            Location = "West Coast",
+                            Name = "test1",
+                            OrganizedBy = "JoJo OntheRadio",
+                            Time = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("TournamentOrganizer.Models.TournamentUser", b =>

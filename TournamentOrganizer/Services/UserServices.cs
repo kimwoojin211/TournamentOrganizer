@@ -7,6 +7,7 @@ using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using TournamentOrganizer.Entities;
+using TournamentOrganizer.Models;
 using TournamentOrganizer.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -26,10 +27,10 @@ namespace TournamentOrganizer.Services
 
   public class UserService : IUserService
   {
-    private readonly UserContext _db;
+    private readonly TournamentOrganizerContext _db;
     private readonly AppSettings _appSettings;
 
-    public UserService(UserContext db, IOptions<AppSettings> appSettings)
+    public UserService(TournamentOrganizerContext db, IOptions<AppSettings> appSettings)
     {
       _appSettings = appSettings.Value;
       _db = db;

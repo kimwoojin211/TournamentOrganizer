@@ -14,17 +14,15 @@ namespace TournamentOrganizer.Controllers
   public class TournamentsController : ControllerBase
   {
     private readonly TournamentOrganizerContext _db;
-    private readonly UserContext _users;
-    public TournamentsController(TournamentOrganizerContext db,  UserContext users)
+    public TournamentsController(TournamentOrganizerContext db)
     {
       _db = db;
-      _users = users;
     }
     // GET api/tournaments
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Tournament>>> Get()
     {
-      var query = _db.Tournaments.Include(tournament => tournament.Matches).AsQueryable();
+      var query = _db.Tournaments.Include(tournament => tournament.Matches).Include(tournament => tournament.TournamentUsers).ThenInclude(join => join.User).AsQueryable();
       return await query.ToListAsync();
       // if (name != null)
       // {
@@ -115,21 +113,22 @@ namespace TournamentOrganizer.Controllers
     }
 
     [HttpDelete("{id}/DeleteUser/{joinId}")]
-    public async Task<IActionResult> DeleteUser(int joinId)
+    public async Task<IActionResult> DeleteUser(int id, int joinId)
     {
-      var joinEntry = _db.TournamentUsers.FirstOrDefaultAsync(entry => entry.TournamentUserId == joinId);
+      var thisTournament =  await _db.Tournaments.FindAsync(id);
+      var joinEntry = thisTournament.Include(entry => entry.TournamentUsers).FirstOrDefaultAsync(entry => entry.TournamentUserId == joinId);
       _db.Remove(joinEntry);
       await _db.SaveChangesAsync();
       return NoContent();
     }
 
     [HttpPost("{id}/AddUser/{userId}")]
-    public async Task<IActionResult> AddUser(Tournament tournament, int userId)
+    public async Task<IActionResult> AddUser(int id, int userId)
     {
-      
-      if(tournament != null)
+      var thisTournament =  await _db.Tournaments.FindAsync(id);
+      if(thisTournament != null)
       {
-        _db.TournamentUsers.Add(new TournamentUser() {TournamentId = tournament.TournamentId, UserId = userId});
+        _db.TournamentUsers.Add(new TournamentUser() {TournamentId = thisTournament.TournamentId, UserId = userId});
         await _db.SaveChangesAsync();
       }
       return NoContent();

@@ -9,8 +9,8 @@ using TournamentOrganizer.Models;
 namespace TournamentOrganizer.Migrations
 {
     [DbContext(typeof(TournamentOrganizerContext))]
-    [Migration("20210407093902_fix3")]
-    partial class fix3
+    [Migration("20210407182331_fix11")]
+    partial class fix11
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -45,7 +45,27 @@ namespace TournamentOrganizer.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            Email = "joebud@budd.com",
+                            Name = "Joe Buden",
+                            Password = "test",
+                            Region = "Los Angeles, CA, USA",
+                            Username = "test"
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            Email = "joebuddy@budd.com",
+                            Name = "Joe Buddy",
+                            Password = "test2",
+                            Region = "Los Angeles, CA, USA",
+                            Username = "test2"
+                        });
                 });
 
             modelBuilder.Entity("TournamentOrganizer.Models.Match", b =>
@@ -159,7 +179,7 @@ namespace TournamentOrganizer.Migrations
                         .IsRequired();
 
                     b.HasOne("TournamentOrganizer.Entities.User", "User")
-                        .WithMany()
+                        .WithMany("MatchUsers")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -178,7 +198,7 @@ namespace TournamentOrganizer.Migrations
                         .IsRequired();
 
                     b.HasOne("TournamentOrganizer.Entities.User", "User")
-                        .WithMany()
+                        .WithMany("TournamentUsers")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -186,6 +206,13 @@ namespace TournamentOrganizer.Migrations
                     b.Navigation("Tournament");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("TournamentOrganizer.Entities.User", b =>
+                {
+                    b.Navigation("MatchUsers");
+
+                    b.Navigation("TournamentUsers");
                 });
 
             modelBuilder.Entity("TournamentOrganizer.Models.Match", b =>
