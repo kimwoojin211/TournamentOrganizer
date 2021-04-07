@@ -8,7 +8,7 @@ namespace TournamentOrganizer.Models
   {
     public Match()
     {
-      this.Users = new HashSet<User>();
+      this.MatchUsers = new HashSet<MatchUser>();
     }
     public int MatchId { get; set; }
 
@@ -18,7 +18,7 @@ namespace TournamentOrganizer.Models
     public string Score { get; set; }
     public int TournamentId { get; set; }
 
-    public virtual HashSet<User> Users { get; set; }
+    public virtual ICollection<MatchUser> MatchUsers { get; set; }
 
     // public ICollection<Player> Players { get; set; }
     // user clicks register for a tournament

@@ -13,6 +13,8 @@ namespace TournamentOrganizer.Models
 
     public DbSet<Tournament> Tournaments { get; set; }
     public DbSet<Match> Matches { get; set; }
+    public DbSet<MatchUser> MatchUsers { get; set; }
+    public DbSet<TournamentUser> TournamentUsers { get; set; }
     protected override void OnModelCreating(ModelBuilder builder)
     {
     }

@@ -18,6 +18,10 @@ namespace TournamentOrganizer.Services
     User Authenticate(string username, string password);
     IEnumerable<User> GetAll();
     void Post(User model);
+    User GetUser(int id);
+    void Put(int id, User user);
+    void Delete(int id);
+    bool UserExists(int id);
   }
 
   public class UserService : IUserService
@@ -66,6 +70,46 @@ namespace TournamentOrganizer.Services
     {
       _db.Users.Add(model);
       _db.SaveChanges(); 
+    }
+
+    public User GetUser(int id)
+    {
+      var user = _db.Users.FirstOrDefault(user => user.UserId == id);
+
+      if(user == null)
+      {
+        return null;
+      }
+      return user.WithoutPassword();
+    }
+    public void Put(int id, User user)
+    {
+      try
+      {
+        _db.Entry(user).State = EntityState.Modified;
+        _db.SaveChanges();
+      }
+      catch (DbUpdateConcurrencyException)
+      {
+        throw;
+      }
+    }
+    public void Delete(int id)
+    {
+      var user = _db.Users.FirstOrDefault(user => user.UserId == id);
+      if (user != null)
+      {
+        _db.Users.Remove(user);
+        _db.SaveChanges();
+      }
+      else
+      {
+        throw new Exception();
+      }
+    }
+    public bool UserExists(int id)
+    {
+      return _db.Users.Any(e => e.UserId == id);
     }
   }
 }

@@ -45,5 +45,61 @@ namespace TournamentOrganizer.Controllers
       _userService.Post(model);
       return Ok();
     }
+
+
+    // GET: api/Tournaments/5
+    [AllowAnonymous]
+    [HttpGet("{id}")]
+    public IActionResult GetUser(int id)
+    {
+      var user = _userService.GetUser(id);
+
+      if (user == null)
+      {
+        return NotFound();
+      }
+
+      return Ok(user);
+    }
+
+    // PUT: api/Tournaments/{#}
+    [HttpPut("{id}")]
+    public IActionResult Put(int id, User user)
+    {
+      if (id != user.UserId)
+      {
+        return BadRequest();
+      }
+      try
+      {
+        _userService.Put(id,user);
+      }
+      catch 
+      {
+        if (!_userService.UserExists(id))
+        {
+          return NotFound();
+        }
+        else
+        {
+          throw;
+        }
+      }
+      return Ok();
+    }
+    // DELETE: api/Users/1
+    [HttpDelete("{id}")]
+    public IActionResult DeleteUser(int id)
+    {
+      try{
+        _userService.Delete(id);
+      }
+      catch
+      {
+        return NotFound();
+      }
+      return Ok();
+    }
+
   }
 }
