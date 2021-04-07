@@ -20,7 +20,7 @@ namespace TournamentOrganizerClient.Controllers
 
     public IActionResult Index()
     {
-      return RedirectToAction("Index", "Home");
+      return View();
     }
 
     public IActionResult Privacy()

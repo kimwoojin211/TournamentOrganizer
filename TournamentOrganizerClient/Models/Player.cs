@@ -11,10 +11,11 @@ namespace TournamentOrganizerClient.Models
 
     public int UserId { get; set; }
 
-    public int Score { get; set; }
+    public virtual User User {get; set;}
 
     public virtual Match CurrentMatch { get; set; }
-    public virtual ICollection<Tournament> AllTournamentMatches { get; set; }
+    public virtual ICollection<Tournament> AllMatches { get; set; }
+    public int TournamentId { get; set; }
 
 
     public static List<Player> GetPlayers()
