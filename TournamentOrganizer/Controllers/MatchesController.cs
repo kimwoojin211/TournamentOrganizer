@@ -54,8 +54,19 @@ namespace TournamentOrganizer.Controllers
     [HttpPost]
     public async Task<ActionResult<Match>> Post(Match match)
     {
-      _db.Matches.Add(match);
-      await _db.SaveChangesAsync();
+      var thisTournament = await _db.Tournaments
+                                .FirstOrDefaultAsync(entry => entry.TournamentId == match.TournamentId);
+      if(thisTournament != null)
+      {
+        System.Console.WriteLine(thisTournament.ToString());
+        thisTournament.Matches.Add(match);
+        _db.Tournaments.Update(thisTournament);
+        await _db.SaveChangesAsync();
+      }
+      else
+      {
+          return BadRequest();
+      }
       // if(users != null)
       // {
       //   foreach(User user in users)
@@ -140,7 +151,9 @@ namespace TournamentOrganizer.Controllers
     {
       if(match != null)
       {
+        System.Console.WriteLine("1");
         _db.MatchUsers.Add(new MatchUser() {MatchId = matchId, UserId = userId});
+        System.Console.WriteLine("2");
         await _db.SaveChangesAsync();
       }
       return NoContent();

@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using TournamentOrganizer.Models;
+using TournamentOrganizer.Entities;
 
-namespace TournamentOrganizer.Migrations
+namespace TournamentOrganizer.Migrations.User
 {
-    [DbContext(typeof(TournamentOrganizerContext))]
-    partial class TournamentOrganizerContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(UserContext))]
+    [Migration("20210407170147_fix8")]
+    partial class fix8
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,7 +45,27 @@ namespace TournamentOrganizer.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            Email = "joebud@budd.com",
+                            Name = "Joe Buden",
+                            Password = "test",
+                            Region = "Los Angeles, CA, USA",
+                            Username = "test"
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            Email = "joebuddy@budd.com",
+                            Name = "Joe Buddy",
+                            Password = "test2",
+                            Region = "Los Angeles, CA, USA",
+                            Username = "test2"
+                        });
                 });
 
             modelBuilder.Entity("TournamentOrganizer.Models.Match", b =>
@@ -66,9 +88,7 @@ namespace TournamentOrganizer.Migrations
 
                     b.HasKey("MatchId");
 
-                    b.HasIndex("TournamentId");
-
-                    b.ToTable("Matches");
+                    b.ToTable("Match");
                 });
 
             modelBuilder.Entity("TournamentOrganizer.Models.MatchUser", b =>
@@ -115,7 +135,7 @@ namespace TournamentOrganizer.Migrations
 
                     b.HasKey("TournamentId");
 
-                    b.ToTable("Tournaments");
+                    b.ToTable("Tournament");
                 });
 
             modelBuilder.Entity("TournamentOrganizer.Models.TournamentUser", b =>
@@ -137,15 +157,6 @@ namespace TournamentOrganizer.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("TournamentUsers");
-                });
-
-            modelBuilder.Entity("TournamentOrganizer.Models.Match", b =>
-                {
-                    b.HasOne("TournamentOrganizer.Models.Tournament", null)
-                        .WithMany("Matches")
-                        .HasForeignKey("TournamentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("TournamentOrganizer.Models.MatchUser", b =>
@@ -200,8 +211,6 @@ namespace TournamentOrganizer.Migrations
 
             modelBuilder.Entity("TournamentOrganizer.Models.Tournament", b =>
                 {
-                    b.Navigation("Matches");
-
                     b.Navigation("TournamentUsers");
                 });
 #pragma warning restore 612, 618

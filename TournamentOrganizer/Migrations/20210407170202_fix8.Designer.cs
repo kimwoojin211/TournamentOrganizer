@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TournamentOrganizer.Models;
 
 namespace TournamentOrganizer.Migrations
 {
     [DbContext(typeof(TournamentOrganizerContext))]
-    partial class TournamentOrganizerContextModelSnapshot : ModelSnapshot
+    [Migration("20210407170202_fix8")]
+    partial class fix8
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,8 +67,6 @@ namespace TournamentOrganizer.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("MatchId");
-
-                    b.HasIndex("TournamentId");
 
                     b.ToTable("Matches");
                 });
@@ -139,15 +139,6 @@ namespace TournamentOrganizer.Migrations
                     b.ToTable("TournamentUsers");
                 });
 
-            modelBuilder.Entity("TournamentOrganizer.Models.Match", b =>
-                {
-                    b.HasOne("TournamentOrganizer.Models.Tournament", null)
-                        .WithMany("Matches")
-                        .HasForeignKey("TournamentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("TournamentOrganizer.Models.MatchUser", b =>
                 {
                     b.HasOne("TournamentOrganizer.Models.Match", "Match")
@@ -200,8 +191,6 @@ namespace TournamentOrganizer.Migrations
 
             modelBuilder.Entity("TournamentOrganizer.Models.Tournament", b =>
                 {
-                    b.Navigation("Matches");
-
                     b.Navigation("TournamentUsers");
                 });
 #pragma warning restore 612, 618

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using TournamentOrganizer.Models;
 
 namespace TournamentOrganizer.Entities
 {

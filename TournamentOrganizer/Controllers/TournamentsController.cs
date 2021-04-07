@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TournamentOrganizer.Models;
+using TournamentOrganizer.Entities;
 
 namespace TournamentOrganizer.Controllers
 {
@@ -13,15 +14,17 @@ namespace TournamentOrganizer.Controllers
   public class TournamentsController : ControllerBase
   {
     private readonly TournamentOrganizerContext _db;
-    public TournamentsController(TournamentOrganizerContext db)
+    private readonly UserContext _users;
+    public TournamentsController(TournamentOrganizerContext db,  UserContext users)
     {
       _db = db;
+      _users = users;
     }
     // GET api/tournaments
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Tournament>>> Get()
     {
-      var query = _db.Tournaments.AsQueryable();
+      var query = _db.Tournaments.Include(tournament => tournament.Matches).AsQueryable();
       return await query.ToListAsync();
       // if (name != null)
       // {
@@ -110,6 +113,28 @@ namespace TournamentOrganizer.Controllers
       await _db.SaveChangesAsync();
       return NoContent();
     }
+
+    [HttpDelete("{id}/DeleteUser/{joinId}")]
+    public async Task<IActionResult> DeleteUser(int joinId)
+    {
+      var joinEntry = _db.TournamentUsers.FirstOrDefaultAsync(entry => entry.TournamentUserId == joinId);
+      _db.Remove(joinEntry);
+      await _db.SaveChangesAsync();
+      return NoContent();
+    }
+
+    [HttpPost("{id}/AddUser/{userId}")]
+    public async Task<IActionResult> AddUser(Tournament tournament, int userId)
+    {
+      
+      if(tournament != null)
+      {
+        _db.TournamentUsers.Add(new TournamentUser() {TournamentId = tournament.TournamentId, UserId = userId});
+        await _db.SaveChangesAsync();
+      }
+      return NoContent();
+    }
+
     private bool TournamentExists(int id)
     {
       return _db.Tournaments.Any(e => e.TournamentId == id);

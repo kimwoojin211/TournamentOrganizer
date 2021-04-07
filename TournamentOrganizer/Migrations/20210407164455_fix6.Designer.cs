@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TournamentOrganizer.Models;
 
 namespace TournamentOrganizer.Migrations
 {
     [DbContext(typeof(TournamentOrganizerContext))]
-    partial class TournamentOrganizerContextModelSnapshot : ModelSnapshot
+    [Migration("20210407164455_fix6")]
+    partial class fix6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,8 +67,6 @@ namespace TournamentOrganizer.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("MatchId");
-
-                    b.HasIndex("TournamentId");
 
                     b.ToTable("Matches");
                 });
@@ -139,15 +139,6 @@ namespace TournamentOrganizer.Migrations
                     b.ToTable("TournamentUsers");
                 });
 
-            modelBuilder.Entity("TournamentOrganizer.Models.Match", b =>
-                {
-                    b.HasOne("TournamentOrganizer.Models.Tournament", null)
-                        .WithMany("Matches")
-                        .HasForeignKey("TournamentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("TournamentOrganizer.Models.MatchUser", b =>
                 {
                     b.HasOne("TournamentOrganizer.Models.Match", "Match")
@@ -157,7 +148,7 @@ namespace TournamentOrganizer.Migrations
                         .IsRequired();
 
                     b.HasOne("TournamentOrganizer.Entities.User", "User")
-                        .WithMany("MatchUsers")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -176,7 +167,7 @@ namespace TournamentOrganizer.Migrations
                         .IsRequired();
 
                     b.HasOne("TournamentOrganizer.Entities.User", "User")
-                        .WithMany("TournamentUsers")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -186,13 +177,6 @@ namespace TournamentOrganizer.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("TournamentOrganizer.Entities.User", b =>
-                {
-                    b.Navigation("MatchUsers");
-
-                    b.Navigation("TournamentUsers");
-                });
-
             modelBuilder.Entity("TournamentOrganizer.Models.Match", b =>
                 {
                     b.Navigation("MatchUsers");
@@ -200,8 +184,6 @@ namespace TournamentOrganizer.Migrations
 
             modelBuilder.Entity("TournamentOrganizer.Models.Tournament", b =>
                 {
-                    b.Navigation("Matches");
-
                     b.Navigation("TournamentUsers");
                 });
 #pragma warning restore 612, 618
