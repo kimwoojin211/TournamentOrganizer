@@ -2,4 +2,32 @@
  Layout = "_Tournament";
 }
 
-<h1>tournament index</h1>
+@using TournamentOrganizerClient.Models
+@model List<TournamentOrganizerClient.Models.Tournament>
+<h1>Tournaments:</h1>
+<hr>
+@if (Model.Any())
+{
+  <ul>
+    @foreach(Tournament tournament in Model)
+        {
+          <p>@Html.ActionLink($"{tournament.Name}", "Details", new { id = myEvent.EventId }, new { type="date" })</p>
+                    <li class="card-text">Event Date: @myEvent.EventDate</li>
+                    <li class="card-text">Start Time: @myEvent.StartTime</li>
+                    <li class="card-text">End Time: @myEvent.EndTime</li>
+                </div>
+            </div>
+        }
+    </ul>
+}
+else
+{
+    <div class="card" style="width: 36rem;">
+        <div class="card-body">
+            <h3>There are no events added yet.</h3>
+        </div>
+    </div>
+}
+
+
+<h3>@Html.ActionLink("Add a New Tournament", "Create") || @Html.ActionLink("Back to Home", "Index", "Home")</h3>

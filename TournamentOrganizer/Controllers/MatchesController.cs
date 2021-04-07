@@ -134,11 +134,11 @@ namespace TournamentOrganizer.Controllers
       await _db.SaveChangesAsync();
       return NoContent();
     }
-    
+
     [HttpDelete("{id}/DeleteUser/{joinId}")]
     public async Task<IActionResult> DeleteUser(int joinId)
     {
-      var joinEntry = _db.MatchUsers.FirstOrDefaultAsync(entry => entry.MatchUserId == joinId);
+      var joinEntry = await _db.MatchUsers.FirstOrDefaultAsync(entry => entry.MatchUserId == joinId);
       _db.Remove(joinEntry);
       await _db.SaveChangesAsync();
       return NoContent();
