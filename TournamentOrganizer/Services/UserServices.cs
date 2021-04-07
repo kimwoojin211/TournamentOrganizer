@@ -17,6 +17,7 @@ namespace TournamentOrganizer.Services
   {
     User Authenticate(string username, string password);
     IEnumerable<User> GetAll();
+    void Post(User model);
   }
 
   public class UserService : IUserService
@@ -60,6 +61,11 @@ namespace TournamentOrganizer.Services
     public IEnumerable<User> GetAll()
     {
       return _db.Users.WithoutPasswords();
+    }
+    public void Post(User model)
+    {
+      _db.Users.Add(model);
+      _db.SaveChanges(); 
     }
   }
 }

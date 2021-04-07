@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using TournamentOrganizer.Services;
 using TournamentOrganizer.Models;
 using System.Linq;
+using TournamentOrganizer.Entities;
 
 namespace TournamentOrganizer.Controllers
 {
@@ -29,11 +30,20 @@ namespace TournamentOrganizer.Controllers
       }
       return Ok(user);
     }
+    
     [HttpGet]
     public IActionResult GetAll()
     {
       var users = _userService.GetAll();
       return Ok(users);
+    }
+
+    [AllowAnonymous]
+    [HttpPost]
+    public IActionResult Post(User model)
+    {
+      _userService.Post(model);
+      return Ok();
     }
   }
 }
