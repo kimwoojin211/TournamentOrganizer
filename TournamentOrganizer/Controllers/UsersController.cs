@@ -6,9 +6,8 @@ using System.Linq;
 
 namespace TournamentOrganizer.Controllers
 {
-  [Authorize]
   [ApiController]
-  [Route("[controller]")]
+  [Route("api/[controller]")]
   public class UsersController : ControllerBase
   {
     private IUserService _userService;

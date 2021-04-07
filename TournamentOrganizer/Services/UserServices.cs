@@ -8,6 +8,8 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using TournamentOrganizer.Entities;
 using TournamentOrganizer.Helpers;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace TournamentOrganizer.Services
 {
@@ -19,21 +21,18 @@ namespace TournamentOrganizer.Services
 
   public class UserService : IUserService
   {
-    private List<User> _users = new List<User>
-    {
-      new User { Id = 1, Name = "Test", UserName = "User", Email = "test@gmail.com", Region = "US", Password = "test" }
-    };
-
+    private readonly UserContext _db;
     private readonly AppSettings _appSettings;
 
-    public UserService(IOptions<AppSettings> appSettings)
+    public UserService(UserContext db, IOptions<AppSettings> appSettings)
     {
       _appSettings = appSettings.Value;
+      _db = db;
     }
 
     public User Authenticate(string username, string password)
     {
-      var user = _users.SingleOrDefault(user => user.UserName == username && user.Password == password);
+      var user = _db.Users.SingleOrDefault(user => user.Username == username && user.Password == password);
       // return null if user not found
       if (user == null)
       {
@@ -47,7 +46,7 @@ namespace TournamentOrganizer.Services
       {
         Subject = new ClaimsIdentity(new Claim[]
         {
-          new Claim(ClaimTypes.Name, user.Id.ToString())
+          new Claim(ClaimTypes.Name, user.UserId.ToString())
         }),
         Expires = DateTime.UtcNow.AddDays(7),
         SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -60,7 +59,7 @@ namespace TournamentOrganizer.Services
 
     public IEnumerable<User> GetAll()
     {
-      return _users.WithoutPasswords();
+      return _db.Users.WithoutPasswords();
     }
   }
 }

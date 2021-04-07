@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System;
-
+using TournamentOrganizer.Entities;
 
 namespace TournamentOrganizer.Models
 {
@@ -8,17 +8,17 @@ namespace TournamentOrganizer.Models
   {
     public Match()
     {
-      this.Teams = new HashSet<Player>>();
+      this.Users = new HashSet<User>();
     }
     public int MatchId { get; set; }
 
     public string Format { get; set; }
 
     public string Category { get; set; }
-    public int TournamentId { get; set; }
     public string Score { get; set; }
+    public int TournamentId { get; set; }
 
-    public virtual HashSet<Player> Players { get; set; }
+    public virtual HashSet<User> Users { get; set; }
 
     // public ICollection<Player> Players { get; set; }
     // user clicks register for a tournament
