@@ -14,7 +14,7 @@ namespace TournamentOrganizerClient.Models
     public string Location { get; set; }
     public DateTime Time { get; set; }
     public string Category { get; set; }
-
+    
     // public virtual ICollection<User> Moderators { get; set; }
     // public virtual Bracket Bracket { get; set; }
     // public string Standings { get; set; }
@@ -47,17 +47,16 @@ namespace TournamentOrganizerClient.Models
       return tournament;
     }
 
-//     public static void Put(Tournament tournament)
-//     {
-//       string jsonTournament = JsonConvert.SerializeObject(place);
-//       var appiCallTask = ApiTournament.PutTournament(tournament.TournamentId, jsonTournament);
-//     }
+    public static void Put(int id,Tournament tournament)
+    {
+      string jsonTournament = JsonConvert.SerializeObject(tournament);
+      var apiCallTask = ApiTournament.Put(id, jsonTournament);
+    }
 
-//     public static void Delete(int id)
-//     {
-//       var apiCallTask = ApiTournament.DeleteTournament(id);
-//     }
-
+    public static void Delete(int id)
+    {
+      var apiCallTask = ApiTournament.Delete(id);
+    }
   }
 }
 

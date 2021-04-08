@@ -5,11 +5,11 @@ namespace TournamentOrganizerClient.Models
 {
   public class Account
   {
-  //   public Account()
-  //   {
-  //     this.Tournaments = new List<Tournament>();
-  //     this.Matches = new List<Match>();
-  //   }
+    public Account()
+    {
+      this.Tournaments = new List<Tournament>();
+      // this.Matches = new List<Match>();
+    }
     public int UserId { get; set; }
     public string Name { get; set; }
     public string Username { get; set; }
@@ -19,7 +19,7 @@ namespace TournamentOrganizerClient.Models
 
     // maybe make list of ints to store joinId #'s?
     // public List<Match> Matches { get; set; }
-    // public List<Tournament> Tournaments { get; set; }
+    public List<Tournament> Tournaments { get; set; }
 
     public static List<Account> GetAccounts()
     {
@@ -68,15 +68,27 @@ namespace TournamentOrganizerClient.Models
         return null;
       }
     }
-    public static void Put(Account account)
+    public static void Put(int id,Account account)
     {
       string jsonAccount = JsonConvert.SerializeObject(account);
-      var appiCallTask = ApiAccount.Put(account.UserId, jsonAccount);
+      var apiCallTask = ApiAccount.Put(id, jsonAccount);
+    }
+
+    public static List<Tournament> GetUserTournaments(int userId)
+    {
+      var apiCalltask = ApiAccount.GetUserTournaments(userId);
+      var result = apiCalltask.Result;
+
+      JArray jsonResponse = JsonConvert.DeserializeObject<JArray>(result);
+      List<Tournament> tournamentList = JsonConvert.DeserializeObject<List<Tournament>>(jsonResponse.ToString());
+
+      return tournamentList;
     }
 
     public static void Delete(int id)
     {
       var apiCallTask = ApiAccount.Delete(id);
     }
+
   }
 }

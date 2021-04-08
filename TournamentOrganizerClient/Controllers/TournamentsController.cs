@@ -27,19 +27,28 @@ namespace TournamentOrganizerClient.Controllers
       return View(thisTournament);
     }
 
-//     [HttpPost]
-//     public IActionResult Create(Tournament tournament)
-//     {
-//       Tournament.Post(tournament);
-//       return RedirectToAction("Index");
-//     }
+    
+    public IActionResult Edit(int id)
+    {
+      var tournament = Tournament.GetDetails(id);
+      return View(tournament);
+    }
+
+    [HttpPost]
+    public IActionResult Details(int id,Tournament tournament)
+    {
+      tournament.TournamentId = id;
+      Tournament.Put(id,tournament);
+      return RedirectToAction("Details", id);
+    }
+
+    [HttpPost]
+    public IActionResult Delete(int id)
+    {
+      Tournament.Delete(id);
+      return RedirectToAction("Index");
+    }
 
 
-//     [HttpPost]
-//     public IActionResult Delete(int id)
-//     {
-//       Tournament.Delete(id);
-//       return RedirectToAction("Index");
-//     }
   }
 }

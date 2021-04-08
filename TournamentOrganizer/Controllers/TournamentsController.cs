@@ -20,14 +20,25 @@ namespace TournamentOrganizer.Controllers
     }
     // GET api/tournaments
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Tournament>>> Get()
+    public async Task<ActionResult<IEnumerable<Tournament>>> Get(string userId)
     {
-      var query = _db.Tournaments.Include(tournament => tournament.Matches).Include(tournament => tournament.TournamentUsers).ThenInclude(join => join.User).AsQueryable();
-      return await query.ToListAsync();
-      // if (name != null)
-      // {
-      //   query = query.Where(entry => entry.Name == name);
-      // }
+      var query = await _db.Tournaments.Include(tournament => tournament.TournamentUsers).ThenInclude(join => join.User).Include(tournament => tournament.Matches).ToListAsync();
+      if (userId != null)
+      {
+        foreach(Tournament tournament in query)
+        {
+          foreach(TournamentUser tournamentUser in tournament.TournamentUsers)
+          {
+            if(tournamentUser.UserId == int.Parse(userId))
+            {
+              query.Remove(tournament);
+            }
+          }
+        }
+      }
+      System.Console.WriteLine($"query {query.ToList().ToString()}");
+      return query;
+      //
       // if (category != null)
       // {
       //   query = query.Where(entry => entry.Category == category);

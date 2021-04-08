@@ -9,12 +9,14 @@
 @foreach (Account account in Model)
 {
     <ul>
+        <p>@Html.ActionLink($"{account.Name}", "Details", new { id = account.UserId })</p>
         <li>UserId: @account.UserId</li>
         <li>Username: @account.Username</li>
         <li>Name: @account.Name</li>
         <li>Email: @account.Email</li>
         <li>Region: @account.Region</li>
         <li>Token: @account.Token</li>
+        @* <li>Tournament: @account.TournamentUsers</li> *@
     </ul>
     <br>
 }

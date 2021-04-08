@@ -11,3 +11,24 @@
     </div>
   </div>
 </div>
+
+@using TournamentOrganizerClient.Models
+@model List<TournamentOrganizerClient.Models.Match>
+
+<h2>Your Matches</h2>
+<hr>
+@if (Model.Any())
+{
+    <ul>
+      @foreach(Match match in Model)
+        {
+          <p>@Html.ActionLink($"{match.Format}", "Details", new { id = match.MatchId})</p>
+        }
+    </ul>
+}
+else
+{
+    <h3>Sorry! There are no matches added yet.</h3>
+}
+
+<h3>@Html.ActionLink("Add a New Match", "Create", "Matches") || @Html.ActionLink("Back to Home", "Index", "Home")</h3>

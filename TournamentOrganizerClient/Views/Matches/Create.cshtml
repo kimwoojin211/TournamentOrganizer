@@ -1,0 +1,30 @@
+@{
+ Layout = "_Match";
+}
+
+<div class="container-fluid">
+  <div class="wrapper">
+    <div class="neon-wrapper">
+      <span class="txt">Tournament </span>
+      <span class="gradient"></span>
+      <span class="dodge"></span>
+    </div>
+  </div>
+</div>
+
+@model TournamentOrganizerClient.Models.Match
+
+<h2>Add Match</h2>
+<hr>
+
+ @using (Html.BeginForm())
+    {
+      <p>@Html.DisplayNameFor(model => model.Format)</p>
+      <p>@Html.TextBoxFor(model => model.Format)</p>
+      <p>@Html.DisplayNameFor(model => model.Category)</p>
+      <p>@Html.TextBoxFor(model => model.Category)</p>
+      <p>@Html.DisplayNameFor(model => model.Score)</p>
+      <p>@Html.TextBoxFor(model => model.Score)</p> 
+
+      <input type="submit" value="Add" class="btn btn-outline-info" />
+    }

@@ -1,0 +1,33 @@
+@{
+ Layout = "_Match";
+}
+
+<div class="container-fluid">
+  <div class="wrapper">
+    <div class="neon-wrapper">
+      <span class="txt">Tournament </span>
+      <span class="gradient"></span>
+      <span class="dodge"></span>
+    </div>
+  </div>
+</div>
+
+@model TournamentOrganizerClient.Models.Match
+
+<h2>Edit</h2>
+<hr>
+
+ @using (Html.BeginForm())
+    {
+      @Html.HiddenFor(model => model.MatchId)
+      <p>@Html.DisplayNameFor(model => model.Format)</p>
+      <p>@Html.EditorFor(model => model.Format)</p>
+      <p>@Html.DisplayNameFor(model => model.Category)</p>
+      <p>@Html.EditorFor(model => model.Category)</p>
+      <p>@Html.DisplayNameFor(model => model.Score)</p>
+      <p>@Html.EditorFor(model => model.Score)</p>
+
+      <input type="submit" value="Save" class="btn btn-outline-info" />
+    }
+            
+            

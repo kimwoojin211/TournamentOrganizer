@@ -130,6 +130,7 @@ namespace TournamentOrganizer.Services
         throw new Exception();
       }
     }
+
     public bool UserExists(int id)
     {
       return _db.Users.Any(e => e.UserId == id);

@@ -1,0 +1,38 @@
+@{
+ Layout = "_Match";
+}
+
+<div class="container-fluid">
+  <div class="wrapper">
+    <div class="neon-wrapper">
+      <span class="txt">Tournament </span>
+      <span class="gradient"></span>
+      <span class="dodge"></span>
+    </div>
+  </div>
+</div>
+
+@model TournamentOrganizerClient.Models.Match
+
+<h2>Delete Match</h2>
+<hr />
+<h4>Are you sure you want to delete this event?</h4>
+<div class="card mx-auto" style="width: 36rem;">
+    <div class="card-body">
+        <div class="form-group row">
+            @Html.DisplayFor(model => model.Format):
+        </div>
+        <div class="form-group row">
+            <p>@Html.DisplayFor(model => model.Format)</p>
+        </div>
+        <div class="form-group row">
+            @using (Html.BeginForm())
+            {
+                <input type="submit" value="Delete" class="btn btn-danger" />
+            }
+        </div>
+        </div>
+    </div>
+</div>
+
+<h3>@Html.ActionLink("Back to Match Details", "Details", new {id = Model.MatchId}) || @Html.ActionLink("Back to Matches", "Index")</h3>

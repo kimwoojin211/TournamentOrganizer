@@ -19,6 +19,13 @@ namespace TournamentOrganizerClient.Controllers
     public IActionResult Details(int id)
     {
       var account = Account.GetDetails(id);
+      account.Tournaments = Account.GetUserTournaments(id);
+      foreach(Tournament tournament in account.Tournaments)
+      {
+      System.Console.WriteLine("account.tournaments " + account.
+      Tournaments.ToString());
+      }
+      
       return View(account);
     }
     public IActionResult Register()
@@ -70,7 +77,7 @@ namespace TournamentOrganizerClient.Controllers
     public IActionResult Details(int id,Account account)
     {
       account.UserId = id;
-      Account.Put(account);
+      Account.Put(id,account);
       return RedirectToAction("Details", id);
     }
     public IActionResult Delete(int id)
