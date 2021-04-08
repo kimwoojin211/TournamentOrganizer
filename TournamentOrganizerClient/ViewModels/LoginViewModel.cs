@@ -1,8 +1,8 @@
-// namespace TournamentOrganizerClient.ViewModels
-// {
-//     public class LoginViewModel
-//     {
-//         public string Username { get; set; }
-//         public string Password { get; set; }
-//     }
-// }
+namespace TournamentOrganizerClient.ViewModels
+{
+    public class LoginViewModel
+    {
+        public string Username { get; set; }
+        public string Password { get; set; }
+    }
+}

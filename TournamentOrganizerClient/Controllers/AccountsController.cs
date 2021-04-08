@@ -21,17 +21,23 @@ namespace TournamentOrganizerClient.Controllers
       var account = Account.GetDetails(id);
       return View(account);
     }
-    // public IActionResult Register()
-    // {
-    //   return View();
-    // }
+    public IActionResult Register()
+    {
+      return View();
+    }
 
-    // [HttpPost]
-    // public async Task<ActionResult> Register(RegisterViewModel model)
-    // {
-    //   var user = new Account{Username= model.Username,Password=model.Password};
-    //   return View();
-    // }
-    
+    [HttpPost]
+    public async Task<ActionResult> Register(RegisterViewModel model)
+    {
+
+      if(Account.Register(model.Username, model.Email, model.Password))
+      {
+        return RedirectToAction("Register");
+      }
+      else
+      {
+        return RedirectToAction("Index","Home");
+      }
+    }
   }
 }

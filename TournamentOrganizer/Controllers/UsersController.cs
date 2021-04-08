@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using TournamentOrganizer.Services;
 using TournamentOrganizer.Models;
 using System.Linq;
+using System;
 using TournamentOrganizer.Entities;
 
 namespace TournamentOrganizer.Controllers
@@ -40,10 +41,17 @@ namespace TournamentOrganizer.Controllers
 
     [AllowAnonymous]
     [HttpPost]
-    public IActionResult Post(User model)
+    public IActionResult Post(User request)
     {
-      _userService.Post(model);
-      return Ok();
+      User newUser = _userService.Post(request.Username,request.Password,request.Email);
+      if(newUser == null)
+      {        
+        return BadRequest();
+      }
+      else
+      {
+        return Ok();
+      }
     }
 
 

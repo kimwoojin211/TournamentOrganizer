@@ -18,7 +18,7 @@ namespace TournamentOrganizer.Services
   {
     User Authenticate(string username, string password);
     IEnumerable<User> GetAll();
-    void Post(User model);
+    User Post(string username, string password, string email);
     User GetUser(int id);
     void Put(int id, User user);
     void Delete(int id);
@@ -67,10 +67,16 @@ namespace TournamentOrganizer.Services
     {
       return _db.Users.WithoutPasswords();
     }
-    public void Post(User model)
+    public User Post(string username, string password, string email)
     {
-      _db.Users.Add(model);
-      _db.SaveChanges(); 
+      if (_db.Users.Any(user => user.Username == username)|| _db.Users.Any(user => user.Email == email))
+      {
+        return null;
+      }
+      User newUser = new User(username, password, email);
+      _db.Users.Add(newUser);
+      _db.SaveChanges();
+      return newUser;
     }
 
     public User GetUser(int id)

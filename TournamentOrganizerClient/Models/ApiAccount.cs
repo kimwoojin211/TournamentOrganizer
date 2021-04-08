@@ -21,13 +21,19 @@ namespace TournamentOrganizerClient.Models
       return response.Content;
     }
 
-    // {
-    //   RestClient client = new RestClient("http://localhost:5000/api");
-    //   RestRequest request = new RestRequest($"users", Method.POST);
-    //   request.AddHeader("Content-Type", "application/json");
-    //   request.AddJsonBody(newAccount);
-    //   var response = await client.ExecuteTaskAsync(request);
-    // }
+    public static async Task<string> Register(string username, string password, string email)
+    {
+      System.Console.WriteLine($"2 {username} + {password} + {email}");
+      RestClient client = new RestClient("http://localhost:5000/api");
+      RestRequest request = new RestRequest($"users", Method.POST);
+      request.AddHeader("Content-Type", "application/json");
+      request.AddJsonBody(
+        new
+        {
+          Username=username,Password=password,Email=email});
+      var response = await client.ExecuteTaskAsync(request);
+      return response.Content;
+    }
   }
 }
 
