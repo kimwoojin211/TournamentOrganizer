@@ -29,7 +29,7 @@ namespace TournamentOrganizerClient.Controllers
     [HttpPost]
     public ActionResult Register(RegisterViewModel model)
     {
-      if(model.Username==null || model.Email==null || model.Password==null || !Account.Register(model.Username, model.Email, model.Password))
+      if(Account.Register(model.Username, model.Email, model.Password))
       {
         System.Console.WriteLine("Failure.");
         return RedirectToAction("Register");

@@ -46,7 +46,7 @@ namespace TournamentOrganizerClient.Models
 
     public static bool Register(string username, string password, string email)
     {
-      var apiCallTask = ApiAccount.Register(username, password, email);
+      var apiCallTask = ApiAccount.Register(username, password);
       var result = apiCallTask.Result;
       return result.Contains("userId");
 
@@ -77,7 +77,7 @@ namespace TournamentOrganizerClient.Models
 
     public static void Delete(int id)
     {
-      var apiCallTask = ApiAccount.DeleteAccount(id);
+      var apiCallTask = ApiAccount.Delete(id);
     }
   }
 }

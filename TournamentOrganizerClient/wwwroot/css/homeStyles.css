@@ -74,7 +74,7 @@ body {
   right:0;
   bottom:0;
   mix-blend-mode: color-dodge;
-  animation: dodge-area 8s linear infinite;
+  /* animation: dodge-area 8s linear infinite; */
 }
 
 @keyframes dodge-area {

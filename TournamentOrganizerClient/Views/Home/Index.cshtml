@@ -7,16 +7,20 @@
   <div class="container-fluid"></div>
     <div class="wrapper">
       <div class="neon-wrapper">
-        <span class="txt">Tournament </span>
+        <span class="txt">Tournaments </span>
         <span class="gradient"></span>
         <span class="dodge"></span>
       </div>
     </div>
     <div class="container">
-      <div class="indexButtons" id="buttons">
-        <a href="home.html" type="button" class="nes-btn is-primary" id="enter">ENTER SITE</a>
-        <a href="../Accounts/Login" type="button" class="nes-btn is-primary" id="login">Login </a>
-      </div>
+      @* <div class="indexButtons" id="buttons"> *@
+        <p>@Html.ActionLink("Click here to login", "Login", "Accounts")</p>
+        <p>@Html.ActionLink("Click here to Register", "Register", "Accounts")</p>
+        <p>@Html.ActionLink("click here to go to matches", "Index", "Matches")</p>
+      @* </div> *@
     </div>
+
+    @* <p><a href="index.cshtml" type="button" class="nes-btn is-primary" id="enter">ENTdsfdsdER SITE</a></p> *@
   </div>
+  
 </body>

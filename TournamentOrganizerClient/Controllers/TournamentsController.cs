@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using TournamentOrganizerClient.Models;
 
 namespace TournamentOrganizerClient.Controllers
@@ -17,29 +16,37 @@ namespace TournamentOrganizerClient.Controllers
       return View(allTournaments);
     }
 
-    public IActionResult Create()
+    [HttpPost]
+    public IActionResult Index(Tournament tournament)
     {
-      return View();
+      Tournament.Post(tournament);
+      return RedirectToAction("Index");
     }
+
     public IActionResult Details(int id)
     {
-      var thisTournament = Tournament.GetDetails(id);
-      return View(thisTournament);
+      var match = Match.GetDetails(id);
+      return View(match);
     }
 
-//     [HttpPost]
-//     public IActionResult Create(Tournament tournament)
-//     {
-//       Tournament.Post(tournament);
-//       return RedirectToAction("Index");
-//     }
+    public IActionResult Edit(int id)
+    {
+      var match = Match.GetDetails(id);
+      return View(match);
+    }
 
+    [HttpPost]
+    public IActionResult Details(int id, Match match)
+    {
+      match.MatchId = id;
+      Match.Put(match);
+      return RedirectToAction("Details", id);
+    }
 
-//     [HttpPost]
-//     public IActionResult Delete(int id)
-//     {
-//       Tournament.Delete(id);
-//       return RedirectToAction("Index");
-//     }
+    public IActionResult Delete(int id)
+    {
+      Match.Delete(id);
+      return RedirectToAction("Index");
+    }
   }
 }
