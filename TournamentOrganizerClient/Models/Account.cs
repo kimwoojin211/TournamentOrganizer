@@ -13,6 +13,7 @@ namespace TournamentOrganizerClient.Models
     public string Username { get; set; }
     public string Email { get; set; }
     public string Region { get; set; }
+    public string Token { get; set; }
 
     public static List<Account> GetAccounts()
     {
@@ -32,12 +33,8 @@ namespace TournamentOrganizerClient.Models
     {
       var apiCallTask = ApiAccount.Get(id);
       var result = apiCallTask.Result;
-      Account account = new Account();
-      if (result != null)
-      {
-        JObject jsonResponse = JsonConvert.DeserializeObject<JObject>(result);
-        account = JsonConvert.DeserializeObject<Account>(jsonResponse.ToString());
-      }
+      JObject jsonResponse = JsonConvert.DeserializeObject<JObject>(result);
+      Account account = JsonConvert.DeserializeObject<Account>(jsonResponse.ToString());
       return account;
     }
 
@@ -45,9 +42,27 @@ namespace TournamentOrganizerClient.Models
     {
       var apiCallTask = ApiAccount.Register(username, password, email);
       var result = apiCallTask.Result;
-      Account account = new Account();
-      return (result is null);
+      return result.Contains("userId");
+
     }
+    public static Account Login(string username, string password)
+    {
+      var apiCallTask = ApiAccount.Login(username, password);
+      var result = apiCallTask.Result;
+      if(result.Contains("userId"))
+      {
+        System.Console.WriteLine("Result! " + result);
+        JObject jsonResponse = JsonConvert
+          .DeserializeObject<JObject>(result);
+        Account account = JsonConvert.DeserializeObject<Account>(jsonResponse.ToString());
+        return account;
+      }
+      else
+      {
+        return null;
+      }
+    }
+
 
     // public static void Put(Account account)
     // {

@@ -23,14 +23,22 @@ namespace TournamentOrganizerClient.Models
 
     public static async Task<string> Register(string username, string password, string email)
     {
-      System.Console.WriteLine($"2 {username} + {password} + {email}");
       RestClient client = new RestClient("http://localhost:5000/api");
       RestRequest request = new RestRequest($"users", Method.POST);
       request.AddHeader("Content-Type", "application/json");
       request.AddJsonBody(
-        new
-        {
-          Username=username,Password=password,Email=email});
+        new {Username=username,Password=password,Email=email});
+      var response = await client.ExecuteTaskAsync(request);
+      System.Console.WriteLine(" " + response.Content + " r08237598237592385" );
+      return response.Content;
+    }
+    public static async Task<string> Login(string username, string password)
+    {
+      RestClient client = new RestClient("http://localhost:5000/api");
+      RestRequest request = new RestRequest($"users/authenticate", Method.POST);
+      request.AddHeader("Content-Type", "application/json");
+      request.AddJsonBody(
+        new { Username = username, Password = password });
       var response = await client.ExecuteTaskAsync(request);
       return response.Content;
     }

@@ -24,7 +24,7 @@ namespace TournamentOrganizer.Controllers
     public IActionResult Authenticate([FromBody]AuthenticateModel model)
     {
       var user = _userService.Authenticate(model.Username, model.Password);
-
+      System.Console.WriteLine("r08237598237592385" + user + " ");
       if (user == null)
       {
         return BadRequest(new { message = "Username or password is incorrect" });
@@ -45,12 +45,12 @@ namespace TournamentOrganizer.Controllers
     {
       User newUser = _userService.Post(request.Username,request.Password,request.Email);
       if(newUser == null)
-      {        
+      {
         return BadRequest();
       }
       else
       {
-        return Ok();
+        return Ok(newUser);
       }
     }
 

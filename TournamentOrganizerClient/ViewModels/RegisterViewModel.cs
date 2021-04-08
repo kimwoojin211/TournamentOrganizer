@@ -5,7 +5,6 @@ namespace TournamentOrganizerClient.ViewModels
     public class RegisterViewModel
     {
         [Required]
-        [EmailAddress]
         [Display(Name = "Username")]
         public string Username { get; set; }
         

@@ -38,27 +38,49 @@ namespace TournamentOrganizer.Services
 
     public User Authenticate(string username, string password)
     {
+      System.Console.WriteLine("---------------");
       var user = _db.Users.SingleOrDefault(user => user.Username == username && user.Password == password);
       // return null if user not found
+        System.Console.WriteLine("!?!??!?!?!??!??!?!?!?/?/!!");
       if (user == null)
       {
         return null;
       }
-
-      // authentication successful so generate jwt token
-      var tokenHandler = new JwtSecurityTokenHandler();
-      var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-      var tokenDescriptor = new SecurityTokenDescriptor
+      else
       {
-        Subject = new ClaimsIdentity(new Claim[]
+        System.Console.WriteLine("!!!!!!!!!!!!!!!!!");
+        var loggedInUser = _db.Users.FirstOrDefault(user => !(String.IsNullOrEmpty(user.Token)));
+        if(!(loggedInUser ==null) && user.UserId != loggedInUser.UserId)
         {
-          new Claim(ClaimTypes.Name, user.UserId.ToString())
-        }),
-        Expires = DateTime.UtcNow.AddDays(7),
-        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-      };
-      var token = tokenHandler.CreateToken(tokenDescriptor);
-      user.Token = tokenHandler.WriteToken(token);
+          System.Console.WriteLine("??????????????????");
+          loggedInUser.Token = null;
+          _db.Users.Attach(loggedInUser);
+          _db.SaveChanges();
+          System.Console.WriteLine("rsavedsavedsavedsaved5savedsavedsavedsavedsavedsavedsaved");
+        }
+          // if loggedinuser null, then first login.
+          // if user and loggedin user are different, null the logged in user's token, create new JWT
+          // if user and loggedinuser are same, user trying to log in is already logged in. do we want to remake the JWT so it refreshes the expiration? or do we just skip over the jwt generation? 
+          // seems like if i remake JWT for case 3, i can simplify the logic to always recreate a new JWT on authentication
+
+          // authentication successful so generate jwt token
+          var tokenHandler = new JwtSecurityTokenHandler();
+          var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+          var tokenDescriptor = new SecurityTokenDescriptor
+          {
+            Subject = new ClaimsIdentity(new Claim[]
+            {
+              new Claim(ClaimTypes.Name, user.UserId.ToString())
+            }),
+            Expires = DateTime.UtcNow.AddDays(7),
+            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+          };
+          var token = tokenHandler.CreateToken(tokenDescriptor);
+          user.Token = tokenHandler.WriteToken(token);
+          _db.Users.Update(user);
+          _db.SaveChanges();
+          System.Console.WriteLine("rsavedsavedsavedsaved5savedsavedsavedsavedsavedsavedsaved");
+        }
 
       return user.WithoutPassword();
     }

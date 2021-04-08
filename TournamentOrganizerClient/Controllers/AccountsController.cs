@@ -27,16 +27,37 @@ namespace TournamentOrganizerClient.Controllers
     }
 
     [HttpPost]
-    public async Task<ActionResult> Register(RegisterViewModel model)
+    public ActionResult Register(RegisterViewModel model)
     {
-
-      if(Account.Register(model.Username, model.Email, model.Password))
+      if(model.Username==null || model.Email==null || model.Password==null || !Account.Register(model.Username, model.Email, model.Password))
       {
+        System.Console.WriteLine("Failure.");
         return RedirectToAction("Register");
       }
       else
       {
+        System.Console.WriteLine("Success!");
         return RedirectToAction("Index","Home");
+      }
+    }
+    public ActionResult Login()
+    {
+      return View();
+    } 
+
+    [HttpPost]
+    public async Task<ActionResult> Login(LoginViewModel model)
+    {
+      var account = Account.Login(model.Username,model.Password);
+      if(account != null)//quickfix.
+      {
+        System.Console.WriteLine("Success! " + account.Token);
+        return RedirectToAction("Index","Home");
+      }
+      else
+      {
+        System.Console.WriteLine("Failure.");
+        return RedirectToAction("Login");
       }
     }
   }
