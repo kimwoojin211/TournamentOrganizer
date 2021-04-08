@@ -75,9 +75,9 @@ namespace TournamentOrganizerClient.Models
       var appiCallTask = ApiAccount.Put(account.UserId, jsonAccount);
     }
 
-    // public static void Delete(int id)
-    // {
-    //   var apiCallTask = ApiAccount.DeleteAccount(id);
-    // }
+    public static void Delete(int id)
+    {
+      var apiCallTask = ApiAccount.DeleteAccount(id);
+    }
   }
 }

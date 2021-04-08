@@ -72,5 +72,11 @@ namespace TournamentOrganizerClient.Controllers
       Account.Put(account);
       return RedirectToAction("Details", id);
     }
+
+    public IActionResult Delete(int id)
+    {
+      Account.Delete(id);
+      return RedirectToAction("Index");
+    }
   }
 }
