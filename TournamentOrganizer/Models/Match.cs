@@ -17,8 +17,6 @@ namespace TournamentOrganizer.Models
     public string Category { get; set; }
     public string Score { get; set; }
     public int TournamentId { get; set; }
-    // public virtual Tournament Tournament { get; set; }
-    // [System.Text.Json.Serialization.JsonIgnore]
     public virtual ICollection<MatchUser> MatchUsers { get; set; }
 
     // public ICollection<Player> Players { get; set; }

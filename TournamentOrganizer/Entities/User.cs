@@ -10,6 +10,14 @@ namespace TournamentOrganizer.Entities
       this.MatchUsers = new HashSet<MatchUser>();
       this.TournamentUsers = new HashSet<TournamentUser>();
     }
+    public User(string username, string password, string email):this()
+    {
+      this.MatchUsers = new HashSet<MatchUser>();
+      this.TournamentUsers = new HashSet<TournamentUser>();
+      this.Username= username;
+      this.Password= password;
+      this.Email = email;
+    }
     public int UserId { get; set; }
     public string Name { get; set; }
     public string Username { get; set; }

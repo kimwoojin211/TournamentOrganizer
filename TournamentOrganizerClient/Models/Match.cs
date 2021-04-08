@@ -1,22 +1,19 @@
-// using System.Collections.Generic;
-// using System;
-// using Newtonsoft.Json;
-// using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
+using System;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
-// namespace TournamentOrganizerClient.Models
-// {
-//   public class Match
-//   {
-//     public int MatchId { get; set; }
+namespace TournamentOrganizerClient.Models
+{
+  public class Match
+  {
+    public int MatchId { get; set; }
 
-//     public ICollection<ICollection<Player>> Teams { get; set; }
+    public string Format { get; set; }
 
-//     public string Format { get; set; }
-
-//     public string Category { get; set; }
-//     public int BracketId { get; set; }
-//     public int TournamentId { get; set; }
-//     public string Score { get; set; }
+    public string Category { get; set; }
+    public string Score { get; set; }
+    public int TournamentId { get; set; }
 
 
 //     public static List<Match> GetMatches()
@@ -57,5 +54,5 @@
 //     {
 //       var apiCallTask = ApiMatch.Delete(id);
 //     }
-//   }
-// }
+  }
+}

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using TournamentOrganizer.Services;
 using TournamentOrganizer.Models;
 using System.Linq;
+using System;
 using TournamentOrganizer.Entities;
 
 namespace TournamentOrganizer.Controllers
@@ -23,7 +24,7 @@ namespace TournamentOrganizer.Controllers
     public IActionResult Authenticate([FromBody]AuthenticateModel model)
     {
       var user = _userService.Authenticate(model.Username, model.Password);
-
+      System.Console.WriteLine("r08237598237592385" + user + " ");
       if (user == null)
       {
         return BadRequest(new { message = "Username or password is incorrect" });
@@ -40,14 +41,21 @@ namespace TournamentOrganizer.Controllers
 
     [AllowAnonymous]
     [HttpPost]
-    public IActionResult Post(User model)
+    public IActionResult Post(User request)
     {
-      _userService.Post(model);
-      return Ok();
+      User newUser = _userService.Post(request.Username,request.Password,request.Email);
+      if(newUser == null)
+      {
+        return BadRequest();
+      }
+      else
+      {
+        return Ok(newUser);
+      }
     }
 
 
-    // GET: api/Tournaments/5
+    // GET: api/Users/5
     [AllowAnonymous]
     [HttpGet("{id}")]
     public IActionResult GetUser(int id)
@@ -62,7 +70,7 @@ namespace TournamentOrganizer.Controllers
       return Ok(user);
     }
 
-    // PUT: api/Tournaments/{#}
+    // PUT: api/Users/{#}
     [HttpPut("{id}")]
     public IActionResult Put(int id, User user)
     {

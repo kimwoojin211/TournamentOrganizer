@@ -21,13 +21,44 @@ namespace TournamentOrganizerClient.Models
       return response.Content;
     }
 
-    // {
-    //   RestClient client = new RestClient("http://localhost:5000/api");
-    //   RestRequest request = new RestRequest($"users", Method.POST);
-    //   request.AddHeader("Content-Type", "application/json");
-    //   request.AddJsonBody(newAccount);
-    //   var response = await client.ExecuteTaskAsync(request);
-    // }
+    public static async Task<string> Register(string username, string password, string email)
+    {
+      RestClient client = new RestClient("http://localhost:5000/api");
+      RestRequest request = new RestRequest($"users", Method.POST);
+      request.AddHeader("Content-Type", "application/json");
+      request.AddJsonBody(
+        new {Username=username,Password=password,Email=email});
+      var response = await client.ExecuteTaskAsync(request);
+      System.Console.WriteLine(" " + response.Content + " r08237598237592385" );
+      return response.Content;
+    }
+    public static async Task<string> Login(string username, string password)
+    {
+      RestClient client = new RestClient("http://localhost:5000/api");
+      RestRequest request = new RestRequest($"users/authenticate", Method.POST);
+      request.AddHeader("Content-Type", "application/json");
+      request.AddJsonBody(
+        new { Username = username, Password = password });
+      var response = await client.ExecuteTaskAsync(request);
+      return response.Content;
+    }
+    public static async Task Put(int id, string account)
+    {
+      RestClient client = new RestClient("http://localhost:5000/api");
+      RestRequest request = new RestRequest($"users/{id}", Method.PUT);
+      request.AddHeader("Content-Type", "application/json");
+      request.AddJsonBody(account);
+      var response = await client.ExecuteTaskAsync(request);
+    }
+
+    public static async Task Delete(int id)
+    {
+      RestClient client = new RestClient("http://localhost:5000/api");
+      RestRequest request = new RestRequest($"users/{id}", Method.DELETE);
+      request.AddHeader("Content-Type", "application/json");
+      var response = await client.ExecuteTaskAsync(request);
+    }
+
   }
 }
 

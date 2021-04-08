@@ -1,0 +1,25 @@
+@{
+  Layout = "_Tournament";
+}
+
+@model TournamentOrganizerClient.Models.Account
+
+<h2>Edit</h2>
+<hr>
+<h3>Editing: @Html.DisplayFor(model => model.Name)</h3>
+
+
+@using (Html.BeginForm())
+{
+  @Html.HiddenFor(model => model.UserId)
+  <p>@Html.DisplayNameFor(model => model.Name)</p>
+  <p>@Html.EditorFor(model => model.Name)</p>
+  <p>@Html.DisplayNameFor(model => model.Username)</p>
+  <p>@Html.EditorFor(model => model.Username)</p>
+  <p>@Html.DisplayNameFor(model => model.Email)</p>
+  <p>@Html.EditorFor(model => model.Email)</p>
+  <p>@Html.DisplayNameFor(model => model.Region)</p>
+  <p>@Html.EditorFor(model => model.Region)</p>
+
+  <input type="submit" value="Save"/>
+}

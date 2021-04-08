@@ -18,7 +18,7 @@ namespace TournamentOrganizer.Services
   {
     User Authenticate(string username, string password);
     IEnumerable<User> GetAll();
-    void Post(User model);
+    User Post(string username, string password, string email);
     User GetUser(int id);
     void Put(int id, User user);
     void Delete(int id);
@@ -44,21 +44,37 @@ namespace TournamentOrganizer.Services
       {
         return null;
       }
-
-      // authentication successful so generate jwt token
-      var tokenHandler = new JwtSecurityTokenHandler();
-      var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-      var tokenDescriptor = new SecurityTokenDescriptor
+      else
       {
-        Subject = new ClaimsIdentity(new Claim[]
+        var loggedInUser = _db.Users.FirstOrDefault(user => !(String.IsNullOrEmpty(user.Token)));
+        if(!(loggedInUser ==null) && user.UserId != loggedInUser.UserId)
         {
-          new Claim(ClaimTypes.Name, user.UserId.ToString())
-        }),
-        Expires = DateTime.UtcNow.AddDays(7),
-        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-      };
-      var token = tokenHandler.CreateToken(tokenDescriptor);
-      user.Token = tokenHandler.WriteToken(token);
+          loggedInUser.Token = null;
+          _db.Users.Attach(loggedInUser);
+          _db.SaveChanges();
+        }
+          // if loggedinuser null, then first login.
+          // if user and loggedin user are different, null the logged in user's token, create new JWT
+          // if user and loggedinuser are same, user trying to log in is already logged in. do we want to remake the JWT so it refreshes the expiration? or do we just skip over the jwt generation? 
+          // seems like if i remake JWT for case 3, i can simplify the logic to always recreate a new JWT on authentication
+
+          // authentication successful so generate jwt token
+          var tokenHandler = new JwtSecurityTokenHandler();
+          var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+          var tokenDescriptor = new SecurityTokenDescriptor
+          {
+            Subject = new ClaimsIdentity(new Claim[]
+            {
+              new Claim(ClaimTypes.Name, user.UserId.ToString())
+            }),
+            Expires = DateTime.UtcNow.AddDays(7),
+            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+          };
+          var token = tokenHandler.CreateToken(tokenDescriptor);
+          user.Token = tokenHandler.WriteToken(token);
+          _db.Users.Update(user);
+          _db.SaveChanges();
+        }
 
       return user.WithoutPassword();
     }
@@ -67,10 +83,16 @@ namespace TournamentOrganizer.Services
     {
       return _db.Users.WithoutPasswords();
     }
-    public void Post(User model)
+    public User Post(string username, string password, string email)
     {
-      _db.Users.Add(model);
-      _db.SaveChanges(); 
+      if (_db.Users.Any(user => user.Username == username)|| _db.Users.Any(user => user.Email == email))
+      {
+        return null;
+      }
+      User newUser = new User(username, password, email);
+      _db.Users.Add(newUser);
+      _db.SaveChanges();
+      return newUser;
     }
 
     public User GetUser(int id)
@@ -87,7 +109,7 @@ namespace TournamentOrganizer.Services
     {
       try
       {
-        _db.Entry(user).State = EntityState.Modified;
+        _db.Users.Update(user);
         _db.SaveChanges();
       }
       catch (DbUpdateConcurrencyException)
