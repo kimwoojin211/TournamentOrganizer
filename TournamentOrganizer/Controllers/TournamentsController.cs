@@ -25,38 +25,24 @@ namespace TournamentOrganizer.Controllers
       var query = await _db.Tournaments.Include(tournament => tournament.TournamentUsers).ThenInclude(join => join.User).Include(tournament => tournament.Matches).ToListAsync();
       if (userId != null)
       {
+        List<Tournament> tournamentList = new List<Tournament>();
         foreach(Tournament tournament in query)
         {
           foreach(TournamentUser tournamentUser in tournament.TournamentUsers)
           {
+          int j = 0;
             if(tournamentUser.UserId == int.Parse(userId))
             {
-              query.Remove(tournament);
+              tournamentList.Add(tournament);
             }
           }
         }
+        return tournamentList;
       }
-      System.Console.WriteLine($"query {query.ToList().ToString()}");
-      return query;
-      //
-      // if (category != null)
-      // {
-      //   query = query.Where(entry => entry.Category == category);
-      // }
-      // if (hoursOpen != null)
-      // {
-      //   query = query.Where(entry => String.Compare(entry.HoursOpen, hoursOpen)<=0);
-      // }
-      // if (hoursClose != null)
-      // {
-      //   query = query.Where(entry => String.Compare(entry.HoursClose, hoursClose) <= 0);
-      // }
-      // if (page != null)
-      // {
-      //   int size = (pageSize == null ? 20 : Int32.Parse(pageSize));
-      //   query = query.OrderBy(tournament => tournament.TournamentId).Skip((int.Parse(page) - 1) * size).Take(size);
-      // }
-
+      else
+      {
+        return query;
+      }
     }
 
     // POST api/Tournaments
