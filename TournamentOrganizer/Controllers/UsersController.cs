@@ -55,7 +55,7 @@ namespace TournamentOrganizer.Controllers
     }
 
 
-    // GET: api/Tournaments/5
+    // GET: api/Users/5
     [AllowAnonymous]
     [HttpGet("{id}")]
     public IActionResult GetUser(int id)
@@ -70,7 +70,7 @@ namespace TournamentOrganizer.Controllers
       return Ok(user);
     }
 
-    // PUT: api/Tournaments/{#}
+    // PUT: api/Users/{#}
     [HttpPut("{id}")]
     public IActionResult Put(int id, User user)
     {

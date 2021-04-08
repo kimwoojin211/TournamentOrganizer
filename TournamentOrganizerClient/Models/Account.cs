@@ -5,15 +5,21 @@ namespace TournamentOrganizerClient.Models
 {
   public class Account
   {
-    public Account()
-    {
-    }
+  //   public Account()
+  //   {
+  //     this.Tournaments = new List<Tournament>();
+  //     this.Matches = new List<Match>();
+  //   }
     public int UserId { get; set; }
     public string Name { get; set; }
     public string Username { get; set; }
     public string Email { get; set; }
     public string Region { get; set; }
     public string Token { get; set; }
+
+    // maybe make list of ints to store joinId #'s?
+    // public List<Match> Matches { get; set; }
+    // public List<Tournament> Tournaments { get; set; }
 
     public static List<Account> GetAccounts()
     {
@@ -63,12 +69,11 @@ namespace TournamentOrganizerClient.Models
       }
     }
 
-
-    // public static void Put(Account account)
-    // {
-    //   string jsonAccount = JsonConvert.SerializeObject(account);
-    //   var appiCallTask = ApiAccount.Put(account.AccountId, jsonAccount);
-    // }
+    public static void Put(Account account)
+    {
+      string jsonAccount = JsonConvert.SerializeObject(account);
+      var appiCallTask = ApiAccount.Put(account.UserId, jsonAccount);
+    }
 
     // public static void Delete(int id)
     // {

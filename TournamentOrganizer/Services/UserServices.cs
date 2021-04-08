@@ -38,25 +38,20 @@ namespace TournamentOrganizer.Services
 
     public User Authenticate(string username, string password)
     {
-      System.Console.WriteLine("---------------");
       var user = _db.Users.SingleOrDefault(user => user.Username == username && user.Password == password);
       // return null if user not found
-        System.Console.WriteLine("!?!??!?!?!??!??!?!?!?/?/!!");
       if (user == null)
       {
         return null;
       }
       else
       {
-        System.Console.WriteLine("!!!!!!!!!!!!!!!!!");
         var loggedInUser = _db.Users.FirstOrDefault(user => !(String.IsNullOrEmpty(user.Token)));
         if(!(loggedInUser ==null) && user.UserId != loggedInUser.UserId)
         {
-          System.Console.WriteLine("??????????????????");
           loggedInUser.Token = null;
           _db.Users.Attach(loggedInUser);
           _db.SaveChanges();
-          System.Console.WriteLine("rsavedsavedsavedsaved5savedsavedsavedsavedsavedsavedsaved");
         }
           // if loggedinuser null, then first login.
           // if user and loggedin user are different, null the logged in user's token, create new JWT
@@ -79,7 +74,6 @@ namespace TournamentOrganizer.Services
           user.Token = tokenHandler.WriteToken(token);
           _db.Users.Update(user);
           _db.SaveChanges();
-          System.Console.WriteLine("rsavedsavedsavedsaved5savedsavedsavedsavedsavedsavedsaved");
         }
 
       return user.WithoutPassword();
@@ -115,7 +109,7 @@ namespace TournamentOrganizer.Services
     {
       try
       {
-        _db.Entry(user).State = EntityState.Modified;
+        _db.Users.Update(user);
         _db.SaveChanges();
       }
       catch (DbUpdateConcurrencyException)

@@ -46,10 +46,10 @@ namespace TournamentOrganizerClient.Controllers
     } 
 
     [HttpPost]
-    public async Task<ActionResult> Login(LoginViewModel model)
+    public ActionResult Login(LoginViewModel model)
     {
       var account = Account.Login(model.Username,model.Password);
-      if(account != null)//quickfix.
+      if(account != null)//quickfix shortcut to async without asyncing.
       {
         System.Console.WriteLine("Success! " + account.Token);
         return RedirectToAction("Index","Home");
@@ -59,6 +59,18 @@ namespace TournamentOrganizerClient.Controllers
         System.Console.WriteLine("Failure.");
         return RedirectToAction("Login");
       }
+    }
+    public IActionResult Edit(int id)
+    {
+      var account = Account.GetDetails(id);
+      return View(account);
+    }
+    [HttpPost]
+    public IActionResult Details(int id,Account account)
+    {
+      account.UserId = id;
+      Account.Put(account);
+      return RedirectToAction("Details", id);
     }
   }
 }
