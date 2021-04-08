@@ -67,6 +67,14 @@ namespace TournamentOrganizerClient.Models
       var response = await client.ExecuteTaskAsync(request);
       return response.Content;
     }
+    
+    public static async Task<string> GetUserMatches(int userId)
+    {
+      RestClient client = new RestClient("http://localhost:5000/api");
+      RestRequest request = new RestRequest($"matches/?userId={userId}", Method.GET);
+      var response = await client.ExecuteTaskAsync(request);
+      return response.Content;
+    }
   }
 }
 

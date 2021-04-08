@@ -1,7 +1,7 @@
 @{
   Layout = "_Tournament";
 }
-
+@using TournamentOrganizerClient.Models;
 @model TournamentOrganizerClient.Models.Tournament
 
 <h3>Tournament Name:</h3>
@@ -12,6 +12,14 @@
   <li>@Html.DisplayNameFor(model => model.Location): @Html.DisplayFor(model => model.Location)</li>
   <li>@Html.DisplayNameFor(model => model.Time): @Html.DisplayFor(model => model.Time, new {@type="time"} )</li>
   <li>@Html.DisplayNameFor(model => model.Category): @Html.DisplayFor(model => model.Category)</li>
+</ul>
+<br>
+<h4>Tournament Matches</h4>
+<ul>
+@foreach(Match match in Model.Matches)
+{
+  <li>Match @match.MatchId)</li>
+}
 </ul>
 
 <p>@Html.ActionLink("Edit Tournament", "Edit", new { id = Model.TournamentId })</p>

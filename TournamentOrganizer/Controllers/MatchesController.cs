@@ -20,32 +20,28 @@ namespace TournamentOrganizer.Controllers
     }
     // GET api/matches
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Match>>> Get()
+    public async Task<ActionResult<IEnumerable<Match>>> Get(string userId)
     {
-      var query = _db.Matches.Include(match => match.MatchUsers).ThenInclude(join => join.User).AsQueryable();
-      return await query.ToListAsync();
-      // if (name != null)
-      // {
-      //   query = query.Where(entry => entry.Name == name);
-      // }
-      // if (category != null)
-      // {
-      //   query = query.Where(entry => entry.Category == category);
-      // }
-      // if (hoursOpen != null)
-      // {
-      //   query = query.Where(entry => String.Compare(entry.HoursOpen, hoursOpen)<=0);
-      // }
-      // if (hoursClose != null)
-      // {
-      //   query = query.Where(entry => String.Compare(entry.HoursClose, hoursClose) <= 0);
-      // }
-      // if (page != null)
-      // {
-      //   int size = (pageSize == null ? 20 : Int32.Parse(pageSize));
-      //   query = query.OrderBy(match => match.MatchId).Skip((int.Parse(page) - 1) * size).Take(size);
-      // }
-
+      var query = await _db.Matches.Include(match => match.MatchUsers).ThenInclude(join => join.User).ToListAsync();
+      if (userId != null)
+      {
+        List<Match> matchList = new List<Match>();
+        foreach(Match match in query)
+        {
+          foreach(MatchUser matchUser in match.MatchUsers)
+          {
+            if(matchUser.UserId == int.Parse(userId))
+            {
+              matchList.Add(match);
+            }
+          }
+        }
+        return matchList;
+      }
+      else
+      {
+        return query;
+      }
     }
 
     // POST api/Matches

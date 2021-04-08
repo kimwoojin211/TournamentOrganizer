@@ -24,6 +24,7 @@ namespace TournamentOrganizerClient.Controllers
     public IActionResult Details(int id)
     {
       var thisTournament = Tournament.GetDetails(id);
+      //thisTournament.Users = Tournament.TournamentUsers(id);
       return View(thisTournament);
     }
 

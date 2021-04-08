@@ -20,11 +20,7 @@ namespace TournamentOrganizerClient.Controllers
     {
       var account = Account.GetDetails(id);
       account.Tournaments = Account.GetUserTournaments(id);
-      foreach(Tournament tournament in account.Tournaments)
-      {
-      System.Console.WriteLine("account.tournaments " + account.
-      Tournaments.ToString());
-      }
+      account.Matches = Account.GetUserMatches(id);
       
       return View(account);
     }

@@ -8,7 +8,7 @@ namespace TournamentOrganizerClient.Models
     public Account()
     {
       this.Tournaments = new List<Tournament>();
-      // this.Matches = new List<Match>();
+      this.Matches = new List<Match>();
     }
     public int UserId { get; set; }
     public string Name { get; set; }
@@ -18,8 +18,8 @@ namespace TournamentOrganizerClient.Models
     public string Token { get; set; }
 
     // maybe make list of ints to store joinId #'s?
-    // public List<Match> Matches { get; set; }
     public List<Tournament> Tournaments { get; set; }
+    public List<Match> Matches { get; set; }
 
     public static List<Account> GetAccounts()
     {
@@ -83,6 +83,17 @@ namespace TournamentOrganizerClient.Models
       List<Tournament> tournamentList = JsonConvert.DeserializeObject<List<Tournament>>(jsonResponse.ToString());
 
       return tournamentList;
+    }
+        
+    public static List<Match> GetUserMatches(int userId)
+    {
+      var apiCalltask = ApiAccount.GetUserMatches(userId);
+      var result = apiCalltask.Result;
+
+      JArray jsonResponse = JsonConvert.DeserializeObject<JArray>(result);
+      List<Match> matchList = JsonConvert.DeserializeObject<List<Match>>(jsonResponse.ToString());
+
+      return matchList;
     }
 
     public static void Delete(int id)

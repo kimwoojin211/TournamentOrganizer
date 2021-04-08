@@ -15,11 +15,19 @@
             <li>Email: @Model.Email</li>
             <li>Region: @Model.Region</li>
         </ul>
+        <br>
         <h4>Registered Tournaments:</h4>
         <ul>
             @foreach(Tournament tournament in Model.Tournaments)
             {
                 <li>Tournament: @tournament.Name</li>
+            }
+        </ul>
+        <h4>Match History:</h4>
+        <ul>
+            @foreach(Match match in Model.Matches)
+            {
+                <li>Tournament @match.TournamentId: Match @match.MatchId</li>
             }
         </ul>
     <br>

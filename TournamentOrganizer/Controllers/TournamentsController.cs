@@ -30,7 +30,6 @@ namespace TournamentOrganizer.Controllers
         {
           foreach(TournamentUser tournamentUser in tournament.TournamentUsers)
           {
-          int j = 0;
             if(tournamentUser.UserId == int.Parse(userId))
             {
               tournamentList.Add(tournament);

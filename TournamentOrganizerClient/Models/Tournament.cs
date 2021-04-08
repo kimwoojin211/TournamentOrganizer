@@ -8,12 +8,19 @@ namespace TournamentOrganizerClient.Models
 {
   public class Tournament
   {
+    public Tournament()
+    {
+      this.Matches = new List<Match>();
+      this.RegisteredUsers = new List<Account>();
+    }
     public int TournamentId { get; set; }
     public string Name { get; set; }
     public string OrganizedBy { get; set; }
     public string Location { get; set; }
     public DateTime Time { get; set; }
     public string Category { get; set; }
+    public List<Match> Matches { get; set; }
+    public List<Account> RegisteredUsers { get; set; }
     
     // public virtual ICollection<User> Moderators { get; set; }
     // public virtual Bracket Bracket { get; set; }
