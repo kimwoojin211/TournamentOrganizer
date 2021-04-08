@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TournamentOrganizerClient.Models;
-// using TournamentOrganizerClient.ViewModels;
+using TournamentOrganizerClient.ViewModels;
 
 namespace TournamentOrganizerClient.Controllers
 {
