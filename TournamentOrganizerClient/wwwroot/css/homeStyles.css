@@ -15,23 +15,34 @@ body {
 #enter {
   position: absolute;
   /* background-color: aqua; */
-  left: 1340px;
+  left: 1440px;
   top: 550px;
   color: aqua;  
   font-family: 'Press Start 2P', cursive;
   width: 105px;
-  height: 60px;
+  height: 55px;
 }
 
 #login {
   position: absolute;
   /* background-color: aqua; */
-  left: 1140px;
+  left: 1299px;
   top: 550px;
   color: aqua;  
   font-family: 'Press Start 2P', cursive;
   width: 105px;
-  height: 60px;
+  height: 50px;
+}
+
+#Tournaments{
+  position: absolute;
+  /* background-color: aqua; */
+  left: 1070px;
+  top: 550px;
+  color: aqua;  
+  font-family: 'Press Start 2P', cursive;
+  width: 180px;
+  height: 50px;
 }
 
 .txt {

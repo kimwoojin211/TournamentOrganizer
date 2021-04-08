@@ -4,22 +4,30 @@
 
 @using TournamentOrganizerClient.Models
 @model List<TournamentOrganizerClient.Models.Tournament>
+
+<div class="container-fluid">
+  <div class="wrapper">
+      <div class="neon-wrapper">
+        <span class="txt">Tournament </span>
+        <span class="gradient"></span>
+        <span class="dodge"></span>
+      </div>
   
-<h1>Tournaments:</h1>
-<hr>
-@if (Model.Any())
-{
-  <ul>
+    @if (Model.Any())
+    {
+    <ul>
     @foreach(Tournament tournament in Model)
       {
         <p>@Html.ActionLink($"{tournament.Name}", "Details", new { id = tournament.TournamentId })</p>
       }
-  </ul>
-}
-else
-{
-  <h3>Sorry! There are no tournaments added yet.</h3>
-}
+    </ul>
+    }
+    else
+    {
+    <h3>Sorry! There are no tournaments added yet.</h3>
+    }
+    </div>
 
+    <h3>@Html.ActionLink("Add a New Tournament", "Create") || @Html.ActionLink("Back to Home", "Index", "Home")</h3>
+  </div>
 
-<h3>@Html.ActionLink("Add a New Tournament", "Create") || @Html.ActionLink("Back to Home", "Index", "Home")</h3>
