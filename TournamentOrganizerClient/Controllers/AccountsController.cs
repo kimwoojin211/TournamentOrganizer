@@ -60,6 +60,7 @@ namespace TournamentOrganizerClient.Controllers
         return RedirectToAction("Login");
       }
     }
+
     public IActionResult Edit(int id)
     {
       var account = Account.GetDetails(id);
@@ -72,11 +73,10 @@ namespace TournamentOrganizerClient.Controllers
       Account.Put(account);
       return RedirectToAction("Details", id);
     }
-
     public IActionResult Delete(int id)
     {
-      Account.Delete(id);
-      return RedirectToAction("Index");
+      var account = Account.GetDetails(id);
+      return View(account);
     }
   }
 }

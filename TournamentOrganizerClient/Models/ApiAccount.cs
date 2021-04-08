@@ -29,7 +29,7 @@ namespace TournamentOrganizerClient.Models
       request.AddJsonBody(
         new {Username=username,Password=password,Email=email});
       var response = await client.ExecuteTaskAsync(request);
-      System.Console.WriteLine(" " + response.Content + " r08237598237592385" );
+
       return response.Content;
     }
     public static async Task<string> Login(string username, string password)

@@ -67,7 +67,7 @@ namespace TournamentOrganizer.Services
             {
               new Claim(ClaimTypes.Name, user.UserId.ToString())
             }),
-            Expires = DateTime.UtcNow.AddDays(7),
+            Expires = DateTime.UtcNow.AddDays(1),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
           };
           var token = tokenHandler.CreateToken(tokenDescriptor);

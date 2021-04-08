@@ -68,7 +68,6 @@ namespace TournamentOrganizerClient.Models
         return null;
       }
     }
-
     public static void Put(Account account)
     {
       string jsonAccount = JsonConvert.SerializeObject(account);
@@ -77,7 +76,7 @@ namespace TournamentOrganizerClient.Models
 
     public static void Delete(int id)
     {
-      var apiCallTask = ApiAccount.DeleteAccount(id);
+      var apiCallTask = ApiAccount.Delete(id);
     }
   }
 }
