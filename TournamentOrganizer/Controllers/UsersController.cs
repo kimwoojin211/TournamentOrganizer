@@ -20,9 +20,9 @@ namespace TournamentOrganizer.Controllers
     }
     [AllowAnonymous]
     [HttpGet]
-    public IActionResult GetAll(string tournamentId)
+    public IActionResult GetAll(string tournamentId,string matchId)
     {
-      var users = _userService.GetAll(tournamentId);
+      var users = _userService.GetAll(tournamentId,matchId);
       return Ok(users);
     }
 

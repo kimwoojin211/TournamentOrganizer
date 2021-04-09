@@ -2,16 +2,7 @@
  Layout = "_Match";
 }
 
-<div class="container-fluid">
-  <div class="wrapper">
-    <div class="neon-wrapper">
-      <span class="txt">Tournament </span>
-      <span class="gradient"></span>
-      <span class="dodge"></span>
-    </div>
-  </div>
-</div>
-
+@using TournamentOrganizerClient.Models;
 @model TournamentOrganizerClient.Models.Match
 
 <h2>Match Details</h2>
@@ -21,6 +12,14 @@
   <li>@Html.DisplayNameFor(model => model.Category): @Html.DisplayFor(model => model.Category)</li>
   <li>@Html.DisplayNameFor(model => model.Score): @Html.DisplayFor(model => model.Score)</li>
 <ul>
+<br>
+<h4>Registered Users</h4>
+<ul>
+    @foreach(Account account in Model.MatchUsers)
+    {
+      <li>Username: @account.Username</li>
+    }
+</ul>
 
 <p>@Html.ActionLink("Edit Match", "Edit", new { id = Model.MatchId })</p>
 <p>@Html.ActionLink("Delete Match", "Delete", new { id = Model.MatchId})</p>

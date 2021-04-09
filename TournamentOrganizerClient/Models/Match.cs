@@ -7,6 +7,11 @@ namespace TournamentOrganizerClient.Models
 {
   public class Match
   {
+    public Match()
+    {
+      this.MatchUsers = new List<Account>();
+    }
+
     public int MatchId { get; set; }
 
     public string Format { get; set; }
@@ -14,6 +19,8 @@ namespace TournamentOrganizerClient.Models
     public string Category { get; set; }
     public string Score { get; set; }
     public int TournamentId { get; set; }
+
+    public List<Account> MatchUsers { get; set; }
 
 
     public static List<Match> GetMatches()
@@ -53,6 +60,16 @@ namespace TournamentOrganizerClient.Models
     public static void Delete(int id)
     {
       var apiCallTask = ApiMatch.Delete(id);
+    }
+    public static List<Account> GetMatchUsers(int matchId)
+    {
+      var apiCalltask = ApiMatch.GetMatchUsers(matchId);
+      var result = apiCalltask.Result;
+
+      JArray jsonResponse = JsonConvert.DeserializeObject<JArray>(result);
+      List<Account> userList = JsonConvert.DeserializeObject<List<Account>>(jsonResponse.ToString());
+
+      return userList;
     }
   }
 }

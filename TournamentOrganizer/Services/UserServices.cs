@@ -17,7 +17,7 @@ namespace TournamentOrganizer.Services
   public interface IUserService
   {
     User Authenticate(string username, string password);
-    IEnumerable<User> GetAll(string tournamentId);
+    IEnumerable<User> GetAll(string tournamentId,string matchId);
     User Post(string username, string password, string email);
     User GetUser(int id);
     void Put(int id, User user);
@@ -36,14 +36,12 @@ namespace TournamentOrganizer.Services
       _db = db;
     }
 
-    public IEnumerable<User> GetAll(string tournamentId)
+    public IEnumerable<User> GetAll(string tournamentId, string matchId)
     {
-      var query = _db.Users.Include(user => user.TournamentUsers).ThenInclude(join => join.Tournament).ToList();
-      Console.WriteLine(string.Join(",", query));
-      Console.WriteLine(tournamentId);
+      var query = _db.Users.Include(user => user.TournamentUsers).ThenInclude(join => join.Tournament).Include(user => user.MatchUsers).ThenInclude(join => join.Match).ToList();
+      List<User> userList = new List<User>();
       if(tournamentId !=null)
       {
-        List<User> userList = new List<User>();
         foreach (User user in query)
         {
           foreach (TournamentUser tournamentUser in user.TournamentUsers)
@@ -54,12 +52,21 @@ namespace TournamentOrganizer.Services
             }
           }
         }
-        return userList.WithoutPasswords();
       }
-      else
+      if (matchId != null)
       {
-        return query;
+        foreach (User user in query)
+        {
+          foreach (MatchUser matchUser in user.MatchUsers)
+          {
+            if (matchUser.MatchId == int.Parse(matchId))
+            {
+              userList.Add(user);
+            }
+          }
+        }
       }
+    return userList.WithoutPasswords();
     }
 
     public User Authenticate(string username, string password)

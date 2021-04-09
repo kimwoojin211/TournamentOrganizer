@@ -43,7 +43,6 @@ namespace TournamentOrganizerClient.Controllers
       return RedirectToAction("Details", id);
     }
 
-    [HttpPost]
     public IActionResult Delete(int id)
     {
       Tournament.Delete(id);
