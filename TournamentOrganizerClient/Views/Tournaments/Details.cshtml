@@ -16,10 +16,10 @@
 <br>
 <h4>Tournament Matches</h4>
 <ul>
-@foreach(Match match in Model.Matches)
-{
-  <li>Match @match.MatchId)</li>
-}
+    @foreach(Match match in Model.Matches)
+    {
+        <li>Tournament @match.TournamentId: Match @match.MatchId</li>
+    }
 </ul>
 
 <p>@Html.ActionLink("Edit Tournament", "Edit", new { id = Model.TournamentId })</p>

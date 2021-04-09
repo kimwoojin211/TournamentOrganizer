@@ -57,8 +57,8 @@ namespace TournamentOrganizer.Controllers
     [HttpGet("{id}")]
     public async Task<ActionResult<Tournament>> GetTournament(int id)
     {
-      var tournament = await _db.Tournaments.FindAsync(id);
-
+      var tournament = await _db.Tournaments.Include(tournament => tournament.Matches).FirstOrDefaultAsync(entry => entry.TournamentId == id);
+      System.Console.WriteLine(string.Join("",tournament.Matches));
       if (tournament == null)
       {
         return NotFound();
