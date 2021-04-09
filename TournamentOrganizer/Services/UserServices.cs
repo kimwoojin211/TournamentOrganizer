@@ -17,7 +17,7 @@ namespace TournamentOrganizer.Services
   public interface IUserService
   {
     User Authenticate(string username, string password);
-    IEnumerable<User> GetAll();
+    IEnumerable<User> GetAll(string tournamentId);
     User Post(string username, string password, string email);
     User GetUser(int id);
     void Put(int id, User user);
@@ -34,6 +34,32 @@ namespace TournamentOrganizer.Services
     {
       _appSettings = appSettings.Value;
       _db = db;
+    }
+
+    public IEnumerable<User> GetAll(string tournamentId)
+    {
+      var query = _db.Users.Include(user => user.TournamentUsers).ThenInclude(join => join.Tournament).ToList();
+      Console.WriteLine(string.Join(",", query));
+      Console.WriteLine(tournamentId);
+      if(tournamentId !=null)
+      {
+        List<User> userList = new List<User>();
+        foreach (User user in query)
+        {
+          foreach (TournamentUser tournamentUser in user.TournamentUsers)
+          {
+            if (tournamentUser.TournamentId == int.Parse(tournamentId))
+            {
+              userList.Add(user);
+            }
+          }
+        }
+        return userList.WithoutPasswords();
+      }
+      else
+      {
+        return query;
+      }
     }
 
     public User Authenticate(string username, string password)
@@ -78,11 +104,7 @@ namespace TournamentOrganizer.Services
 
       return user.WithoutPassword();
     }
-
-    public IEnumerable<User> GetAll()
-    {
-      return _db.Users.WithoutPasswords();
-    }
+    
     public User Post(string username, string password, string email)
     {
       if (_db.Users.Any(user => user.Username == username)|| _db.Users.Any(user => user.Email == email))

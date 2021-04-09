@@ -64,6 +64,16 @@ namespace TournamentOrganizerClient.Models
     {
       var apiCallTask = ApiTournament.Delete(id);
     }
+    public static List<Account> GetTournamentUsers(int tournamentId)
+    {
+      var apiCalltask = ApiTournament.GetTournamentUsers(tournamentId);
+      var result = apiCalltask.Result;
+
+      JArray jsonResponse = JsonConvert.DeserializeObject<JArray>(result);
+      List<Account> userList = JsonConvert.DeserializeObject<List<Account>>(jsonResponse.ToString());
+
+      return userList;
+    }
   }
 }
 

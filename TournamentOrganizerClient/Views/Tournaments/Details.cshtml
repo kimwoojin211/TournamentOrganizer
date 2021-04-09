@@ -18,7 +18,15 @@
 <ul>
     @foreach(Match match in Model.Matches)
     {
-        <li>Tournament @match.TournamentId: Match @match.MatchId</li>
+        <li>Match #@match.MatchId</li>
+    }
+</ul>
+
+<h4>Registered Users</h4>
+<ul>
+    @foreach(Account account in Model.RegisteredUsers)
+    {
+      <li>Username: @account.Username</li>
     }
 </ul>
 

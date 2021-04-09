@@ -74,6 +74,11 @@ namespace TournamentOrganizerClient.Models
       var apiCallTask = ApiAccount.Put(id, jsonAccount);
     }
 
+    public static void Delete(int id)
+    {
+      var apiCallTask = ApiAccount.Delete(id);
+    }
+
     public static List<Tournament> GetUserTournaments(int userId)
     {
       var apiCalltask = ApiAccount.GetUserTournaments(userId);
@@ -94,11 +99,6 @@ namespace TournamentOrganizerClient.Models
       List<Match> matchList = JsonConvert.DeserializeObject<List<Match>>(jsonResponse.ToString());
 
       return matchList;
-    }
-
-    public static void Delete(int id)
-    {
-      var apiCallTask = ApiAccount.Delete(id);
     }
 
   }
