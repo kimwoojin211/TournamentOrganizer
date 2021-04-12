@@ -1,10 +1,10 @@
 # Tournament Organizer
 
 <div align="center">
-<img src="https://github.com/glenbuck503.png" width="200px" height="auto" >
-<img src="https://github.com/kimwoojin211.png" width="200px" height="auto" >
-<img src="https://github.com/OlgaHi.png" width="200px" height="auto" >
-<img src="https://github.com/BrianSturgis.png" width="200px" height="auto" >
+<img src="https://github.com/glenbuck503.png" width="25%" height="auto" >
+<img src="https://github.com/kimwoojin211.png" width="25%" height="auto" >
+<img src="https://github.com/OlgaHi.png" width="25%" height="auto" >
+<img src="https://github.com/BrianSturgis.png" width="25%" height="auto" >
 
 
 </div>
@@ -39,20 +39,237 @@ Repository: https://github.com/kimwoojin211/TournamentOrganizer.Solution
 2. Once you verify you have SQL installed, create a file called "appsettings.json" in the root directory TournamentOrganizer.Solution. Paste the following into this file.
 ```
 {
+  "AppSettings": {
+    "Secret":"[ENTER LONG (15+ CHARS) STRING HERE]"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Warning",
+      "System": "Information", 
+      "Microsoft": "Information"
+    }
+  },
+  "AllowedHosts": "*",
   "ConnectionStrings": {
       "DefaultConnection": "Server=localhost;Port={PORT OF SERVER};database=[NAME YOUR DB];uid=root;pwd={PASSWORD OF SERVER};"
   }
 }
 ```
-3. In your terminal, run "dotnet ef database update"
+3. In the same folder, create another file called "appsettings.Development.json" Paste the following into this file.
+```
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  }
+}
+```
+4. In your terminal, run "dotnet ef database update"
 ### _Installation: General Use_
 
 1. Back in your terminal in the  production directory, type "dotnet run." The terminal will present local host routes for you to navigate to in your browser. An example would be "http://localhost:5000." Enter this into a web browser of choice to use this application. Keep the terminal running as it is being used to control the local server.
-2. When finished, exit the terminal or use the command "CTRL C"(Windows) or "CMD C"(Mac) to shut down the local server.
+2. Navigate to the top level directory of the project (TournamentOrganizer.Solution), and then into the TournamentOrganizerClient folder.
+3. Like before, create a file called "appsettings.json" and paste the following into this file.
+```
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning", 
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  },
+  "AllowedHosts": "*"
+}
+```
+4. In the same folder, create another file called "appsettings.Development.json" Paste the following into this file.
+```
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  }
+}
+```
+5. Type in "dotnet run" into your terminal.
+6. When finished, exit the terminal or use the command "CTRL C"(Windows) or "CMD C"(Mac) to shut down the local server.
 
 
+##  API Documentation
 
-## No known bugs as of 4/8/2021
+<details>
+<summary>Click here to see full API Documentation</summary>
+
+# Version: 1.0
+### <ul><li> **Base URL** </ul></li> 
+```
+http://localhost/5000 
+or 
+https://localhost/5001
+```
+### <ul><li> **HTTP Requests:** </ul></li>
+<details>
+<summary>Tournaments</summary>
+
+```
+GET /api/tournaments
+POST /api/tournaments
+GET /api/tournaments/{id}
+PUT /api/tournaments/{id}
+DELETE /api/tournaments/{id}
+POST /api/tournaments/{id}/AddUser/{userId}
+DELETE /api/tournaments/{id}/DeleteUser/{joinId}
+
+```
+
+### <ul><li>  **URL Parameters** </ul></li>
+
+| Parameter | Type | Default | Required | Description |
+| :---: | :---: | :---: | :---: | --- |
+| userId | int | none | false | Return tournaments that user w/ userId# has registered for.| 
+
+
+### Example Query
+```
+https://localhost:5000/api/Tournaments/?userId=135
+```
+
+### <ul><li> **Sample Response** </ul></li>
+
+```
+{
+  {
+    "tournamentId": 1,
+    "name": "Battle of West Coast",
+    "organizedBy": "Epi Codus",
+    "location": "West Coast",
+    "time": "2021-04-20T19:00:00",
+    "category": "Game",
+    "matches": [
+        {
+            "matchId": 1,
+            "format": "First to 5",
+            "category": "Game",
+            "score": "1-1",
+            "tournamentId": 1,
+            "matchUsers": [user1, user2]
+        }
+    ],
+    "tournamentUsers": [
+      {
+          "tournamentUserId": 1,
+          "userId": 1,
+          "tournamentId": 1
+      },
+      {
+          "tournamentUserId": 2,
+          "userId": 2,
+          "tournamentId": 1
+      }
+    ]
+  }
+}
+```
+</details>
+
+<details>
+<summary>Matches</summary>
+
+```
+GET /api/matches
+POST /api/matches
+GET /api/matches/{id}
+PUT /api/matches/{id}
+DELETE /api/matches/{id}
+POST /api/matches/{id}/AddUser/{userId}
+DELETE /api/matches/{id}/DeleteUser/{joinId}
+
+```
+  
+### <ul><li>  **URL Parameters** </ul></li>
+
+| Parameter | Type | Default | Required | Description |
+| :---: | :---: | :---: | :---: | --- |
+| userId | int | none | false | Return matches that user w/ userId# has registered for.| 
+
+
+### Example Query
+```
+https://localhost:5000/api/matches/?userId=135
+```
+
+### <ul><li> **Sample Response** </ul></li>
+
+```
+{
+  "matchId": 235,
+  "format": "First to 5",
+  "category": "Game",
+  "score": "1-1",
+  "tournamentId": 1,
+  "matchUsers": [
+      {
+          "matchUserId": 2,
+          "userId": 1,
+          "matchId": 2
+      }
+  ]
+}
+```
+</details>
+
+<details>
+<summary>Users</summary>
+
+```
+GET /api/users
+POST /api/users
+POST /api/users/authenticate
+GET /api/users/{id}
+PUT /api/users/{id}
+DELETE /api/users/{id}
+POST /api/users/{id}/AddUser/{userId}
+DELETE /api/users/{id}/DeleteUser/{joinId}
+
+```
+
+
+### Example Query
+```
+https://localhost:5000/api/users/2
+```
+
+### <ul><li> **Sample Response** </ul></li>
+
+```
+{
+  "userId": 33,
+  "Name": "First Last",
+  "Username": "LasttoFirst",
+  "Email": "fl@gmail.com",
+  "Region": "West NA",
+  "Password": "imthebest" 
+  "Token": null
+}
+```
+</details>
+
+</details>
+
+## Bugs as of 4/11/2021
+
+- Bracket logic not included
+- Font size is not legible on some pages.
+- JWT remains active, even if a different user logs on.
+- Styling incomplete or broken on some pages.
+- Not all pages are routed yet.
+
 
 ## Support and contact details
 
@@ -63,16 +280,14 @@ For contact support, please email  <a href =>Send Email</a>
 - C# 9
 - .NET 5.0.102
 - SDK 8.0.19
-- -Razor
+- Razor
 - Bootstrap 4.5
 - HTML 5 (CS version)/CSS3
 - My SQL 8.0.19/WorkBench 8.0.19
 - Entity Framework
 - HTML Helper
-- Identity Framework
-- Swagger
 - Entity Design
-- SwashBuckle
+- JWT Authentication
 
 
 ### License
@@ -80,3 +295,9 @@ For contact support, please email  <a href =>Send Email</a>
 333.23.21
 
 Copyright (c) 2021 Tournament Organizer.
+```
+Woo Jin Kim (kimwoojin211@gmail.com)
+Olha Hizhytska (olgainfotech@gmail.com)
+Brian Sturgis (sturujisu@gmail.com)
+Glen Buck (glenbuck503@gmail.com)
+```
