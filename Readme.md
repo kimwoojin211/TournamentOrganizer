@@ -1,10 +1,10 @@
 # Tournament Organizer
 
 <div align="center">
-<img src="https://github.com/glenbuck503.png" width="25%" height="auto" >
-<img src="https://github.com/kimwoojin211.png" width="25%" height="auto" >
-<img src="https://github.com/OlgaHi.png" width="25%" height="auto" >
-<img src="https://github.com/BrianSturgis.png" width="25%" height="auto" >
+<img src="https://github.com/glenbuck503.png" width="20%" height="auto" >
+<img src="https://github.com/kimwoojin211.png" width="20%" height="auto" >
+<img src="https://github.com/OlgaHi.png" width="20%" height="auto" >
+<img src="https://github.com/BrianSturgis.png" width="20%" height="auto" >
 
 
 </div>
